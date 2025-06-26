@@ -19,6 +19,49 @@ data:
   AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
   ENABLE_CLUSTERING_EMBEDDINGS: {{ printf "%v" (.Values.config.enableClusteringEmbeddings | default false) | quote }}
 
+  # Hyperparameters and other settings (most were missing)
+  DBSCAN_EPS_MIN: {{ .Values.config.dbscanEpsMin | quote }}
+  DBSCAN_EPS_MAX: {{ .Values.config.dbscanEpsMax | quote }}
+  DBSCAN_MIN_SAMPLES_MIN: {{ .Values.config.dbscanMinSamplesMin | quote }}
+  DBSCAN_MIN_SAMPLES_MAX: {{ .Values.config.dbscanMinSamplesMax | quote }}
+  NUM_CLUSTERS_MIN: {{ .Values.config.numClustersMin | quote }}
+  NUM_CLUSTERS_MAX: {{ .Values.config.numClustersMax | quote }}
+  USE_MINIBATCH_KMEANS: {{ .Values.config.useMinibatchKmeans | quote }}
+  MINIBATCH_KMEANS_PROCESSING_BATCH_SIZE: {{ .Values.config.minibatchKmeansProcessingBatchSize | quote }}
+  GMM_N_COMPONENTS_MIN: {{ .Values.config.gmmNComponentsMin | quote }}
+  GMM_N_COMPONENTS_MAX: {{ .Values.config.gmmNComponentsMax | quote }}
+  GMM_COVARIANCE_TYPE: {{ .Values.config.gmmCovarianceType | quote }}
+  PCA_COMPONENTS_MIN: {{ .Values.config.pcaComponentsMin | quote }}
+  PCA_COMPONENTS_MAX: {{ .Values.config.pcaComponentsMax | quote }}
+  CLUSTERING_RUNS: {{ .Values.config.clusteringRuns | quote }}
+  MAX_QUEUED_ANALYSIS_JOBS: {{ .Values.config.maxQueuedAnalysisJobs | quote }}
+  ITERATIONS_PER_BATCH_JOB: {{ .Values.config.iterationsPerBatchJob | quote }}
+  MAX_CONCURRENT_BATCH_JOBS: {{ .Values.config.maxConcurrentBatchJobs | quote }}
+  DB_FETCH_CHUNK_SIZE: {{ .Values.config.dbFetchChunkSize | quote }}
+  TOP_N_ELITES: {{ .Values.config.topNElites | quote }}
+  EXPLOITATION_START_FRACTION: {{ .Values.config.exploitationStartFraction | quote }}
+  EXPLOITATION_PROBABILITY: {{ .Values.config.exploitationProbability | quote }}
+  MUTATION_INT_ABS_DELTA: {{ .Values.config.mutationIntAbsDelta | quote }}
+  MUTATION_FLOAT_ABS_DELTA: {{ .Values.config.mutationFloatAbsDelta | quote }}
+  MUTATION_KMEANS_COORD_FRACTION: {{ .Values.config.mutationKmeansCoordFraction | quote }}
+  SCORE_WEIGHT_DIVERSITY: {{ .Values.config.scoreWeightDiversity | quote }}
+  SCORE_WEIGHT_PURITY: {{ .Values.config.scoreWeightPurity | quote }}
+  SCORE_WEIGHT_OTHER_FEATURE_DIVERSITY: {{ .Values.config.scoreWeightOtherFeatureDiversity | quote }}
+  SCORE_WEIGHT_OTHER_FEATURE_PURITY: {{ .Values.config.scoreWeightOtherFeaturePurity | quote }}
+  SCORE_WEIGHT_SILHOUETTE: {{ .Values.config.scoreWeightSilhouette | quote }}
+  SCORE_WEIGHT_DAVIES_BOULDIN: {{ .Values.config.scoreWeightDaviesBouldin | quote }}
+  SCORE_WEIGHT_CALINSKI_HARABASZ: {{ .Values.config.scoreWeightCalinskiHarabasz | quote }}
+  TOP_K_MOODS_FOR_PURITY_CALCULATION: {{ .Values.config.topKMoodsForPurityCalculation | quote }}
+  OTHER_FEATURE_PREDOMINANCE_THRESHOLD_FOR_PURITY: {{ .Values.config.otherFeaturePredominanceThresholdForPurity | quote }}
+  TOP_N_OTHER_FEATURES: {{ .Values.config.topNOtherFeatures | quote }}
+  ENERGY_MIN: {{ .Values.config.energyMin | quote }}
+  ENERGY_MAX: {{ .Values.config.energyMax | quote }}
+  TEMPO_MIN_BPM: {{ .Values.config.tempoMinBpm | quote }}
+  TEMPO_MAX_BPM: {{ .Values.config.tempoMaxBpm | quote }}
+  MIN_SONGS_PER_GENRE_FOR_STRATIFICATION: {{ .Values.config.minSongsPerGenreForStratification | quote }}
+  STRATIFIED_SAMPLING_TARGET_PERCENTILE: {{ .Values.config.stratifiedSamplingTargetPercentile | quote }}
+  SAMPLING_PERCENTAGE_CHANGE_PER_RUN: {{ .Values.config.samplingPercentageChangePerRun | quote }}
+
   # AI Playlist Naming (Essential URLs/Models)
   OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
   OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
