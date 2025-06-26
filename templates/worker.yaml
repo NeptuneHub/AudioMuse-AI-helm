@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "audiomuse-ai.fullname" . }}-worker
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "audiomuse-ai.labels" . | nindent 4 }}
+    app.kubernetes.io/component: worker
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "audiomuse-ai.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "audiomuse-ai.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: worker
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+      containers:
+        - name: rq-worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SERVICE_TYPE
+              value: "worker"
+            - name: JELLYFIN_USER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-jellyfin
+                  key: user_id
+            - name: JELLYFIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-jellyfin
+                  key: api_token
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
+                  key: POSTGRES_DB
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-gemini
+                  key: GEMINI_API_KEY
+            - name: AI_CHAT_DB_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
+                  key: AI_CHAT_DB_USER_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: {{ include "audiomuse-ai.fullname" . }}-config
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          volumeMounts:
+            - name: app-temp-audio
+              mountPath: /app/temp_audio
+      volumes:
+        - name: app-temp-audio
+          emptyDir: {}

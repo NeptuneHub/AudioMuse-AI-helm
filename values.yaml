@@ -1,0 +1,167 @@
+# Default values for audiomuse-ai.
+
+fullnameOverride: ""
+nameOverride: ""
+
+namespace:
+  name: "playlist"
+
+image:
+  repository: ghcr.io/neptunehub/audiomuse-ai
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart's appVersion.
+  tag: ""
+
+flask:
+  replicaCount: 1
+  service:
+    type: LoadBalancer
+    port: 8000
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+worker:
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+
+redis:
+  enabled: true
+  image: "redis:7-alpine"
+  service:
+    port: 6379
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+
+postgres:
+  enabled: true
+  image: "postgres:15-alpine"
+  user: "audiomuse"
+  password: "audiomusepassword" # IMPORTANT: Change this for production or use --set
+  db: "audiomusedb"
+  aiChatDbUser: "ai_user"
+  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change this for production or use --set
+  service:
+    port: 5432
+  persistence:
+    enabled: true
+    size: 5Gi
+    # storageClassName: "your-storage-class" # Uncomment and specify if needed
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+# Credentials and external service configurations
+# IMPORTANT: For production, manage these secrets securely, e.g., with Sealed Secrets or Vault.
+jellyfin:
+  userId: "0e45c44b3e2e4da7a2be11a72a1c8575"
+  token: "e0b8c325bc1b426c81922b90c0aa2ff1"
+  url: "http://jellyfin.192.168.3.131.nip.io:8087"
+
+gemini:
+  apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
+
+# Application configuration parameters from config.py
+config:
+  tempDir: "/app/temp_audio"
+  maxDistance: 0.5
+  maxSongsPerCluster: 0
+  maxSongsPerArtist: 3
+  numRecentAlbums: 0
+  clusterAlgorithm: "kmeans"
+  aiModelProvider: "NONE"
+  enableClusteringEmbeddings: false
+  dbscanEpsMin: 0.1
+  dbscanEpsMax: 0.5
+  dbscanMinSamplesMin: 5
+  dbscanMinSamplesMax: 20
+  numClustersMin: 40
+  numClustersMax: 100
+  useMinibatchKmeans: true
+  minibatchKmeansProcessingBatchSize: 1000
+  gmmNComponentsMin: 40
+  gmmNComponentsMax: 100
+  gmmCovarianceType: "full"
+  pcaComponentsMin: 0
+  pcaComponentsMax: 8
+  clusteringRuns: 5000
+  maxQueuedAnalysisJobs: 100
+  iterationsPerBatchJob: 20
+  maxConcurrentBatchJobs: 10
+  dbFetchChunkSize: 1000
+  topNElites: 10
+  exploitationStartFraction: 0.2
+  exploitationProbability: 0.7
+  mutationIntAbsDelta: 3
+  mutationFloatAbsDelta: 0.05
+  mutationKmeansCoordFraction: 0.05
+  scoreWeightDiversity: 2.0
+  scoreWeightPurity: 1.0
+  scoreWeightOtherFeatureDiversity: 0.0
+  scoreWeightOtherFeaturePurity: 0.0
+  scoreWeightSilhouette: 0.0
+  scoreWeightDaviesBouldin: 0.0
+  scoreWeightCalinskiHarabasz: 0.0
+  topKMoodsForPurityCalculation: 3
+  lnMoodDiversityStats:
+    min: -0.1863
+    max: 1.5518
+    mean: 0.9995
+    sd: 0.3541
+  lnMoodDiversityEmbedingStats:
+    min: -0.174
+    max: 0.570
+    mean: -0.101
+    sd: 0.245
+  lnMoodPurityStats:
+    min: 0.6981
+    max: 7.2848
+    mean: 5.8679
+    sd: 1.1557
+  lnMoodPurityEmbedingStats:
+    min: -0.494
+    max: 2.583
+    mean: 0.673
+    sd: 1.063
+  lnOtherFeaturesDiversityStats:
+    min: -0.19
+    max: 2.06
+    mean: 1.5
+    sd: 0.46
+  lnOtherFeaturesPurityStats:
+    min: 8.67
+    max: 8.95
+    mean: 8.84
+    sd: 0.07
+  otherFeaturePredominanceThresholdForPurity: 0.3
+  ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
+  ollamaModelName: "mistral:7b"
+  geminiModelName: "gemini-1.5-flash-latest"
+  aiChatDbUserName: "ai_user"
+  topNOtherFeatures: 2
+  energyMin: 0.01
+  energyMax: 0.15
+  tempoMinBpm: 40.0
+  tempoMaxBpm: 200.0
+  minSongsPerGenreForStratification: 100
+  stratifiedSamplingTargetPercentile: 50
+  samplingPercentageChangePerRun: 0.2

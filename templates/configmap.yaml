@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "audiomuse-ai.fullname" . }}-config
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "audiomuse-ai.labels" . | nindent 4 }}
+data:
+  JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
+  POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
+  POSTGRES_PORT: {{ .Values.postgres.service.port | quote }}
+  REDIS_URL: {{ printf "redis://%s-redis:%d/0" (include "audiomuse-ai.fullname" .) .Values.redis.service.port }}
+  TEMP_DIR: {{ .Values.config.tempDir | quote }}
+  MAX_DISTANCE: {{ .Values.config.maxDistance | quote }}
+  MAX_SONGS_PER_CLUSTER: {{ .Values.config.maxSongsPerCluster | quote }}
+  MAX_SONGS_PER_ARTIST: {{ .Values.config.maxSongsPerArtist | quote }}
+  NUM_RECENT_ALBUMS: {{ .Values.config.numRecentAlbums | quote }}
+  CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
+  AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
+  ENABLE_CLUSTERING_EMBEDDINGS: {{ .Values.config.enableClusteringEmbeddings | quote }}
+  DBSCAN_EPS_MIN: {{ .Values.config.dbscanEpsMin | quote }}
+  DBSCAN_EPS_MAX: {{ .Values.config.dbscanEpsMax | quote }}
+  DBSCAN_MIN_SAMPLES_MIN: {{ .Values.config.dbscanMinSamplesMin | quote }}
+  DBSCAN_MIN_SAMPLES_MAX: {{ .Values.config.dbscanMinSamplesMax | quote }}
+  NUM_CLUSTERS_MIN: {{ .Values.config.numClustersMin | quote }}
+  NUM_CLUSTERS_MAX: {{ .Values.config.numClustersMax | quote }}
+  USE_MINIBATCH_KMEANS: {{ .Values.config.useMinibatchKmeans | quote }}
+  MINIBATCH_KMEANS_PROCESSING_BATCH_SIZE: {{ .Values.config.minibatchKmeansProcessingBatchSize | quote }}
+  GMM_N_COMPONENTS_MIN: {{ .Values.config.gmmNComponentsMin | quote }}
+  GMM_N_COMPONENTS_MAX: {{ .Values.config.gmmNComponentsMax | quote }}
+  GMM_COVARIANCE_TYPE: {{ .Values.config.gmmCovarianceType | quote }}
+  PCA_COMPONENTS_MIN: {{ .Values.config.pcaComponentsMin | quote }}
+  PCA_COMPONENTS_MAX: {{ .Values.config.pcaComponentsMax | quote }}
+  CLUSTERING_RUNS: {{ .Values.config.clusteringRuns | quote }}
+  MAX_QUEUED_ANALYSIS_JOBS: {{ .Values.config.maxQueuedAnalysisJobs | quote }}
+  ITERATIONS_PER_BATCH_JOB: {{ .Values.config.iterationsPerBatchJob | quote }}
+  MAX_CONCURRENT_BATCH_JOBS: {{ .Values.config.maxConcurrentBatchJobs | quote }}
+  DB_FETCH_CHUNK_SIZE: {{ .Values.config.dbFetchChunkSize | quote }}
+  TOP_N_ELITES: {{ .Values.config.topNElites | quote }}
+  EXPLOITATION_START_FRACTION: {{ .Values.config.exploitationStartFraction | quote }}
+  EXPLOITATION_PROBABILITY: {{ .Values.config.exploitationProbability | quote }}
+  MUTATION_INT_ABS_DELTA: {{ .Values.config.mutationIntAbsDelta | quote }}
+  MUTATION_FLOAT_ABS_DELTA: {{ .Values.config.mutationFloatAbsDelta | quote }}
+  MUTATION_KMEANS_COORD_FRACTION: {{ .Values.config.mutationKmeansCoordFraction | quote }}
+  SCORE_WEIGHT_DIVERSITY: {{ .Values.config.scoreWeightDiversity | quote }}
+  SCORE_WEIGHT_PURITY: {{ .Values.config.scoreWeightPurity | quote }}
+  SCORE_WEIGHT_OTHER_FEATURE_DIVERSITY: {{ .Values.config.scoreWeightOtherFeatureDiversity | quote }}
+  SCORE_WEIGHT_OTHER_FEATURE_PURITY: {{ .Values.config.scoreWeightOtherFeaturePurity | quote }}
+  SCORE_WEIGHT_SILHOUETTE: {{ .Values.config.scoreWeightSilhouette | quote }}
+  SCORE_WEIGHT_DAVIES_BOULDIN: {{ .Values.config.scoreWeightDaviesBouldin | quote }}
+  SCORE_WEIGHT_CALINSKI_HARABASZ: {{ .Values.config.scoreWeightCalinskiHarabasz | quote }}
+  TOP_K_MOODS_FOR_PURITY_CALCULATION: {{ .Values.config.topKMoodsForPurityCalculation | quote }}
+  LN_MOOD_DIVERSITY_MIN: {{ .Values.config.lnMoodDiversityStats.min | quote }}
+  LN_MOOD_DIVERSITY_MAX: {{ .Values.config.lnMoodDiversityStats.max | quote }}
+  LN_MOOD_DIVERSITY_MEAN: {{ .Values.config.lnMoodDiversityStats.mean | quote }}
+  LN_MOOD_DIVERSITY_SD: {{ .Values.config.lnMoodDiversityStats.sd | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MIN: {{ .Values.config.lnMoodDiversityEmbedingStats.min | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MAX: {{ .Values.config.lnMoodDiversityEmbedingStats.max | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MEAN: {{ .Values.config.lnMoodDiversityEmbedingStats.mean | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_SD: {{ .Values.config.lnMoodDiversityEmbedingStats.sd | quote }}
+  LN_MOOD_PURITY_MIN: {{ .Values.config.lnMoodPurityStats.min | quote }}
+  LN_MOOD_PURITY_MAX: {{ .Values.config.lnMoodPurityStats.max | quote }}
+  LN_MOOD_PURITY_MEAN: {{ .Values.config.lnMoodPurityStats.mean | quote }}
+  LN_MOOD_PURITY_SD: {{ .Values.config.lnMoodPurityStats.sd | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MIN: {{ .Values.config.lnMoodPurityEmbedingStats.min | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MAX: {{ .Values.config.lnMoodPurityEmbedingStats.max | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MEAN: {{ .Values.config.lnMoodPurityEmbedingStats.mean | quote }}
+  LN_MOOD_PURITY_EMBEDDING_SD: {{ .Values.config.lnMoodPurityEmbedingStats.sd | quote }}
+  LN_OTHER_FEAT_DIV_MIN: {{ .Values.config.lnOtherFeaturesDiversityStats.min | quote }}
+  LN_OTHER_FEAT_DIV_MAX: {{ .Values.config.lnOtherFeaturesDiversityStats.max | quote }}
+  LN_OTHER_FEAT_DIV_MEAN: {{ .Values.config.lnOtherFeaturesDiversityStats.mean | quote }}
+  LN_OTHER_FEAT_DIV_SD: {{ .Values.config.lnOtherFeaturesDiversityStats.sd | quote }}
+  LN_OTHER_FEAT_PUR_MIN: {{ .Values.config.lnOtherFeaturesPurityStats.min | quote }}
+  LN_OTHER_FEAT_PUR_MAX: {{ .Values.config.lnOtherFeaturesPurityStats.max | quote }}
+  LN_OTHER_FEAT_PUR_MEAN: {{ .Values.config.lnOtherFeaturesPurityStats.mean | quote }}
+  LN_OTHER_FEAT_PUR_SD: {{ .Values.config.lnOtherFeaturesPurityStats.sd | quote }}
+  OTHER_FEATURE_PREDOMINANCE_THRESHOLD_FOR_PURITY: {{ .Values.config.otherFeaturePredominanceThresholdForPurity | quote }}
+  OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
+  OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
+  GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
+  AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}
+  TOP_N_OTHER_FEATURES: {{ .Values.config.topNOtherFeatures | quote }}
+  ENERGY_MIN: {{ .Values.config.energyMin | quote }}
+  ENERGY_MAX: {{ .Values.config.energyMax | quote }}
+  TEMPO_MIN_BPM: {{ .Values.config.tempoMinBpm | quote }}
+  TEMPO_MAX_BPM: {{ .Values.config.tempoMaxBpm | quote }}
+  MIN_SONGS_PER_GENRE_FOR_STRATIFICATION: {{ .Values.config.minSongsPerGenreForStratification | quote }}
+  STRATIFIED_SAMPLING_TARGET_PERCENTILE: {{ .Values.config.stratifiedSamplingTargetPercentile | quote }}
+  SAMPLING_PERCENTAGE_CHANGE_PER_RUN: {{ .Values.config.samplingPercentageChangePerRun | quote }}
