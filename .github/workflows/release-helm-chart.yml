@@ -36,15 +36,18 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Clean up old chart-releaser artifacts (Force regeneration) # NEW STEP
+      - name: Clean up old chart-releaser artifacts (Force regeneration)
         run: |
-          # This step will clone gh-pages, remove its contents, and push an empty branch
-          # This is a drastic measure to ensure chart-releaser starts fresh.
-          # Only run this if you are certain you want to clear your gh-pages branch.
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git checkout --orphan gh-pages-temp
           git rm -rf .
           git commit --allow-empty -m "Clean gh-pages-temp for regeneration"
           git push -f origin gh-pages-temp:gh-pages
+
+          # ADDED THIS LINE: Switch back to main before deleting gh-pages-temp
+          git checkout main
+          
           git branch -D gh-pages-temp
           echo "gh-pages branch forcefully cleaned for regeneration."
 
