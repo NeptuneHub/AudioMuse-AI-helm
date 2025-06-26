@@ -129,7 +129,7 @@ config:
     max: 1.5518
     mean: 0.9995
     sd: 0.3541
-  lnMoodDiversityEmbedingStats:
+  lnMoodDiversityEmbeddingStats:
     min: -0.174
     max: 0.570
     mean: -0.101
@@ -139,7 +139,7 @@ config:
     max: 7.2848
     mean: 5.8679
     sd: 1.1557
-  lnMoodPurityEmbedingStats:
+  lnMoodPurityEmbeddingStats:
     min: -0.494
     max: 2.583
     mean: 0.673

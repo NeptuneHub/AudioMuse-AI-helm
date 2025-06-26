@@ -1,0 +1,8 @@
+.git/
+.github/
+.gitignore
+# Any other files or directories that should not be included in the chart package
+# For example, if you have local development files or temporary build artifacts:
+# .vscode/
+# .env
+# charts/ # If you don't want the packaged chart itself to be included in the source chart
