@@ -72,7 +72,7 @@ spec:
                   key: AI_CHAT_DB_USER_PASSWORD
           envFrom:
             - configMapRef:
-                name: {{ include "audiomuse-ai.fullname" . }}-config
+                name: {{ include "audiomuse-ai.fullname" . }}-env-vars
           resources:
             {{- toYaml .Values.flask.resources | nindent 12 }}
           volumeMounts:
