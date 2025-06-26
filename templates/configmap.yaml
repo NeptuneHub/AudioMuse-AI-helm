@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
 data:
-  # General Constants
+  # General Constants (Essential)
   JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
   TEMP_DIR: {{ .Values.config.tempDir | quote }}
   MAX_DISTANCE: {{ printf "%v" (.Values.config.maxDistance | default 0.5) | quote }}
@@ -14,102 +14,20 @@ data:
   MAX_SONGS_PER_ARTIST: {{ printf "%v" (.Values.config.maxSongsPerArtist | default 3) | quote }}
   NUM_RECENT_ALBUMS: {{ printf "%v" (.Values.config.numRecentAlbums | default 0) | quote }}
 
-  # Algorithm Choose Constants
+  # Algorithm Choose Constants (Essential for runtime switching)
   CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
   AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
   ENABLE_CLUSTERING_EMBEDDINGS: {{ printf "%v" (.Values.config.enableClusteringEmbeddings | default false) | quote }}
 
-  # DBSCAN Only Constants
-  DBSCAN_EPS_MIN: {{ printf "%v" (.Values.config.dbscanEpsMin | default 0.1) | quote }}
-  DBSCAN_EPS_MAX: {{ printf "%v" (.Values.config.dbscanEpsMax | default 0.5) | quote }}
-  DBSCAN_MIN_SAMPLES_MIN: {{ printf "%v" (.Values.config.dbscanMinSamplesMin | default 5) | quote }}
-  DBSCAN_MIN_SAMPLES_MAX: {{ printf "%v" (.Values.config.dbscanMinSamplesMax | default 20) | quote }}
-
-  # KMEANS Only Constants
-  NUM_CLUSTERS_MIN: {{ printf "%v" (.Values.config.numClustersMin | default 40) | quote }}
-  NUM_CLUSTERS_MAX: {{ printf "%v" (.Values.config.numClustersMax | default 100) | quote }}
-  USE_MINIBATCH_KMEANS: {{ printf "%v" (.Values.config.useMinibatchKmeans | default true) | quote }}
-  MINIBATCH_KMEANS_PROCESSING_BATCH_SIZE: {{ printf "%v" (.Values.config.minibatchKmeansProcessingBatchSize | default 1000) | quote }}
-
-  # GMM Only Constants
-  GMM_N_COMPONENTS_MIN: {{ printf "%v" (.Values.config.gmmNComponentsMin | default 40) | quote }}
-  GMM_N_COMPONENTS_MAX: {{ printf "%v" (.Values.config.gmmNComponentsMax | default 100) | quote }}
-  GMM_COVARIANCE_TYPE: {{ .Values.config.gmmCovarianceType | quote }}
-
-  # PCA Constants
-  PCA_COMPONENTS_MIN: {{ printf "%v" (.Values.config.pcaComponentsMin | default 0) | quote }}
-  PCA_COMPONENTS_MAX: {{ printf "%v" (.Values.config.pcaComponentsMax | default 8) | quote }}
-
-  # Clustering Runs for Diversity
-  CLUSTERING_RUNS: {{ printf "%v" (.Values.config.clusteringRuns | default 5000) | quote }}
-  MAX_QUEUED_ANALYSIS_JOBS: {{ printf "%v" (.Values.config.maxQueuedAnalysisJobs | default 100) | quote }}
-
-  # Batching Constants for Clustering Runs
-  ITERATIONS_PER_BATCH_JOB: {{ printf "%v" (.Values.config.iterationsPerBatchJob | default 20) | quote }}
-  MAX_CONCURRENT_BATCH_JOBS: {{ printf "%v" (.Values.config.maxConcurrentBatchJobs | default 10) | quote }}
-  DB_FETCH_CHUNK_SIZE: {{ printf "%v" (.Values.config.dbFetchChunkSize | default 1000) | quote }}
-
-  # Guided Evolutionary Clustering Constants
-  TOP_N_ELITES: {{ printf "%v" (.Values.config.topNElites | default 10) | quote }}
-  EXPLOITATION_START_FRACTION: {{ printf "%v" (.Values.config.exploitationStartFraction | default 0.2) | quote }}
-  EXPLOITATION_PROBABILITY: {{ printf "%v" (.Values.config.exploitationProbability | default 0.7) | quote }}
-  MUTATION_INT_ABS_DELTA: {{ printf "%v" (.Values.config.mutationIntAbsDelta | default 3) | quote }}
-  MUTATION_FLOAT_ABS_DELTA: {{ printf "%v" (.Values.config.mutationFloatAbsDelta | default 0.05) | quote }}
-  MUTATION_KMEANS_COORD_FRACTION: {{ printf "%v" (.Values.config.mutationKmeansCoordFraction | default 0.05) | quote }}
-
-  # Scoring Weights for Enhanced Diversity Score
-  SCORE_WEIGHT_DIVERSITY: {{ printf "%v" (.Values.config.scoreWeightDiversity | default 2.0) | quote }}
-  SCORE_WEIGHT_PURITY: {{ printf "%v" (.Values.config.scoreWeightPurity | default 1.0) | quote }}
-  SCORE_WEIGHT_OTHER_FEATURE_DIVERSITY: {{ printf "%v" (.Values.config.scoreWeightOtherFeatureDiversity | default 0.0) | quote }}
-  SCORE_WEIGHT_OTHER_FEATURE_PURITY: {{ printf "%v" (.Values.config.otherFeaturePurity | default 0.0) | quote }}
-  SCORE_WEIGHT_SILHOUETTE: {{ printf "%v" (.Values.config.scoreWeightSilhouette | default 0.0) | quote }}
-  SCORE_WEIGHT_DAVIES_BOULDIN: {{ printf "%v" (.Values.config.scoreWeightDaviesBouldin | default 0.0) | quote }}
-  SCORE_WEIGHT_CALINSKI_HARABASZ: {{ printf "%v" (.Values.config.scoreWeightCalinskiHarabasz | default 0.0) | quote }}
-
-  TOP_K_MOODS_FOR_PURITY_CALCULATION: {{ printf "%v" (.Values.config.topKMoodsForPurityCalculation | default 3) | quote }}
-
-  # Other Features Predominance Threshold
-  OTHER_FEATURE_PREDOMINANCE_THRESHOLD_FOR_PURITY: {{ printf "%v" (.Values.config.otherFeaturePredominanceThresholdForPurity | default 0.3) | quote }}
-
-  # AI Playlist Naming
+  # AI Playlist Naming (Essential URLs/Models)
   OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
   OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
   GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
 
-  # DB Host/Port/URL for Postgres and Redis (derived from service names)
+  # DB Host/Port/URL for Postgres and Redis (Derived from service names)
   POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
   POSTGRES_PORT: {{ .Values.postgres.service.port | quote }}
   REDIS_URL: {{ printf "redis://%s-redis:%d/0" (include "audiomuse-ai.fullname" .) .Values.redis.service.port }}
 
-  # AI User for Chat SQL Execution
+  # AI User for Chat SQL Execution (Essential)
   AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}
-
-  # Classifier Constant
-  TOP_N_OTHER_FEATURES: {{ printf "%v" (.Values.config.topNOtherFeatures | default 2) | quote }}
-
-  # Energy Normalization Range
-  ENERGY_MIN: {{ printf "%v" (.Values.config.energyMin | default 0.01) | quote }}
-  ENERGY_MAX: {{ printf "%v" (.Values.config.energyMax | default 0.15) | quote }}
-
-  # Tempo Normalization Range (BPM)
-  TEMPO_MIN_BPM: {{ printf "%v" (.Values.config.tempoMinBpm | default 40.0) | quote }}
-  TEMPO_MAX_BPM: {{ printf "%v" (.Values.config.tempoMaxBPM | default 200.0) | quote }}
-
-  # Stratified Sampling Constants
-  MIN_SONGS_PER_GENRE_FOR_STRATIFICATION: {{ printf "%v" (.Values.config.minSongsPerGenreForStratification | default 100) | quote }}
-  STRATIFIED_SAMPLING_TARGET_PERCENTILE: {{ printf "%v" (.Values.config.stratifiedSamplingTargetPercentile | default 50) | quote }}
-  SAMPLING_PERCENTAGE_CHANGE_PER_RUN: {{ printf "%v" (.Values.config.samplingPercentageChangePerRun | default 0.2) | quote }}
-
-  # NOTE: The following statistical constants and model paths are now handled
-  # directly by defaults in config.py and are no longer exposed in the ConfigMap
-  # to reduce its size:
-  # - LN_MOOD_DIVERSITY_STATS (min, max, mean, sd)
-  # - LN_MOOD_DIVERSITY_EMBEDDING_STATS (min, max, mean, sd)
-  # - LN_MOOD_PURITY_STATS (min, max, mean, sd)
-  # - LN_MOOD_PURITY_EMBEDDING_STATS (min, max, mean, sd)
-  # - LN_OTHER_FEAT_DIV_STATS (min, max, mean, sd)
-  # - LN_OTHER_FEAT_PUR_STATS (min, max, mean, sd)
-  # - MOOD_LABELS, TOP_N_MOODS, EMBEDDING_MODEL_PATH, PREDICTION_MODEL_PATH,
-  #   DANCEABILITY_MODEL_PATH, AGGRESSIVE_MODEL_PATH, HAPPY_MODEL_PATH,
-  #   PARTY_MODEL_PATH, RELAXED_MODEL_PATH, SAD_MODEL_PATH, OTHER_FEATURE_LABELS,
-  #   and STRATIFIED_GENRES.
