@@ -4,7 +4,7 @@ fullnameOverride: ""
 nameOverride: ""
 
 namespace:
-  name: "playlist"
+  name: ""
 
 image:
   repository: ghcr.io/neptunehub/audiomuse-ai
