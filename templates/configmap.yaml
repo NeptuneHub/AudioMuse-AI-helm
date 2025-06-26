@@ -63,42 +63,42 @@ data:
   SCORE_WEIGHT_OTHER_FEATURE_DIVERSITY: {{ printf "%v" .Values.config.scoreWeightOtherFeatureDiversity | quote }}
   SCORE_WEIGHT_OTHER_FEATURE_PURITY: {{ printf "%v" .Values.config.scoreWeightOtherFeaturePurity | quote }}
   SCORE_WEIGHT_SILHOUETTE: {{ printf "%v" .Values.config.scoreWeightSilhouette | quote }}
-  SCORE_WEIGHT_DAVIES_BOULDIN: {{ printf "%v" .Values.config.daviesBouldin | quote }} # Corrected to .Values.config.daviesBouldin
+  SCORE_WEIGHT_DAVIES_BOULDIN: {{ printf "%v" .Values.config.daviesBouldin | quote }}
   SCORE_WEIGHT_CALINSKI_HARABASZ: {{ printf "%v" .Values.config.calinskiHarabasz | quote }}
 
   TOP_K_MOODS_FOR_PURITY_CALCULATION: {{ printf "%v" .Values.config.topKMoodsForPurityCalculation | quote }}
 
   # Statistics for Raw Score Scaling (Mood Diversity and Purity)
-  LN_MOOD_DIVERSITY_MIN: {{ printf "%v" .Values.config.lnMoodDiversityStats.min | quote }}
-  LN_MOOD_DIVERSITY_MAX: {{ printf "%v" .Values.config.lnMoodDiversityStats.max | quote }}
-  LN_MOOD_DIVERSITY_MEAN: {{ printf "%v" .Values.config.lnMoodDiversityStats.mean | quote }}
-  LN_MOOD_DIVERSITY_SD: {{ printf "%v" .Values.config.lnMoodDiversityStats.sd | quote }}
+  LN_MOOD_DIVERSITY_MIN: {{ printf "%v" ((.Values.config.lnMoodDiversityStats | default dict).min | default -0.1863) | quote }}
+  LN_MOOD_DIVERSITY_MAX: {{ printf "%v" ((.Values.config.lnMoodDiversityStats | default dict).max | default 1.5518) | quote }}
+  LN_MOOD_DIVERSITY_MEAN: {{ printf "%v" ((.Values.config.lnMoodDiversityStats | default dict).mean | default 0.9995) | quote }}
+  LN_MOOD_DIVERSITY_SD: {{ printf "%v" ((.Values.config.lnMoodDiversityStats | default dict).sd | default 0.3541) | quote }}
 
-  LN_MOOD_DIVERSITY_EMBEDDING_MIN: {{ printf "%v" .Values.config.lnMoodDiversityEmbeddingStats.min | quote }}
-  LN_MOOD_DIVERSITY_EMBEDDING_MAX: {{ printf "%v" .Values.config.lnMoodDiversityEmbeddingStats.max | quote }}
-  LN_MOOD_DIVERSITY_EMBEDDING_MEAN: {{ printf "%v" .Values.config.lnMoodDiversityEmbeddingStats.mean | quote }}
-  LN_MOOD_DIVERSITY_EMBEDDING_SD: {{ printf "%v" .Values.config.lnMoodDiversityEmbeddingStats.sd | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MIN: {{ printf "%v" ((.Values.config.lnMoodDiversityEmbeddingStats | default dict).min | default -0.174) | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MAX: {{ printf "%v" ((.Values.config.lnMoodDiversityEmbeddingStats | default dict).max | default 0.570) | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_MEAN: {{ printf "%v" ((.Values.config.lnMoodDiversityEmbeddingStats | default dict).mean | default -0.101) | quote }}
+  LN_MOOD_DIVERSITY_EMBEDDING_SD: {{ printf "%v" ((.Values.config.lnMoodDiversityEmbeddingStats | default dict).sd | default 0.245) | quote }}
 
-  LN_MOOD_PURITY_MIN: {{ printf "%v" .Values.config.lnMoodPurityStats.min | quote }}
-  LN_MOOD_PURITY_MAX: {{ printf "%v" .Values.config.lnMoodPurityStats.max | quote }}
-  LN_MOOD_PURITY_MEAN: {{ printf "%v" .Values.config.lnMoodPurityStats.mean | quote }}
-  LN_MOOD_PURITY_SD: {{ printf "%v" .Values.config.lnMoodPurityStats.sd | quote }}
+  LN_MOOD_PURITY_MIN: {{ printf "%v" ((.Values.config.lnMoodPurityStats | default dict).min | default 0.6981) | quote }}
+  LN_MOOD_PURITY_MAX: {{ printf "%v" ((.Values.config.lnMoodPurityStats | default dict).max | default 7.2848) | quote }}
+  LN_MOOD_PURITY_MEAN: {{ printf "%v" ((.Values.config.lnMoodPurityStats | default dict).mean | default 5.8679) | quote }}
+  LN_MOOD_PURITY_SD: {{ printf "%v" ((.Values.config.lnMoodPurityStats | default dict).sd | default 1.1557) | quote }}
 
-  LN_MOOD_PURITY_EMBEDDING_MIN: {{ printf "%v" .Values.config.lnMoodPurityEmbeddingStats.min | quote }}
-  LN_MOOD_PURITY_EMBEDDING_MAX: {{ printf "%v" .Values.config.lnMoodPurityEmbeddingStats.max | quote }}
-  LN_MOOD_PURITY_EMBEDDING_MEAN: {{ printf "%v" .Values.config.lnMoodPurityEmbeddingStats.mean | quote }}
-  LN_MOOD_PURITY_EMBEDDING_SD: {{ printf "%v" .Values.config.lnMoodPurityEmbeddingStats.sd | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MIN: {{ printf "%v" ((.Values.config.lnMoodPurityEmbeddingStats | default dict).min | default -0.494) | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MAX: {{ printf "%v" ((.Values.config.lnMoodPurityEmbeddingStats | default dict).max | default 2.583) | quote }}
+  LN_MOOD_PURITY_EMBEDDING_MEAN: {{ printf "%v" ((.Values.config.lnMoodPurityEmbeddingStats | default dict).mean | default 0.673) | quote }}
+  LN_MOOD_PURITY_EMBEDDING_SD: {{ printf "%v" ((.Values.config.lnMoodPurityEmbeddingStats | default dict).sd | default 1.063) | quote }}
 
   # Statistics for Log-Transformed and Standardized "Other Features" Scores
-  LN_OTHER_FEAT_DIV_MIN: {{ printf "%v" .Values.config.lnOtherFeaturesDiversityStats.min | quote }}
-  LN_OTHER_FEAT_DIV_MAX: {{ printf "%v" .Values.config.lnOtherFeaturesDiversityStats.max | quote }}
-  LN_OTHER_FEAT_DIV_MEAN: {{ printf "%v" .Values.config.lnOtherFeaturesDiversityStats.mean | quote }}
-  LN_OTHER_FEAT_DIV_SD: {{ printf "%v" .Values.config.lnOtherFeaturesDiversityStats.sd | quote }}
+  LN_OTHER_FEAT_DIV_MIN: {{ printf "%v" ((.Values.config.lnOtherFeaturesDiversityStats | default dict).min | default -0.19) | quote }}
+  LN_OTHER_FEAT_DIV_MAX: {{ printf "%v" ((.Values.config.lnOtherFeaturesDiversityStats | default dict).max | default 2.06) | quote }}
+  LN_OTHER_FEAT_DIV_MEAN: {{ printf "%v" ((.Values.config.lnOtherFeaturesDiversityStats | default dict).mean | default 1.5) | quote }}
+  LN_OTHER_FEAT_DIV_SD: {{ printf "%v" ((.Values.config.lnOtherFeaturesDiversityStats | default dict).sd | default 0.46) | quote }}
 
-  LN_OTHER_FEAT_PUR_MIN: {{ printf "%v" .Values.config.lnOtherFeaturesPurityStats.min | quote }}
-  LN_OTHER_FEAT_PUR_MAX: {{ printf "%v" .Values.config.lnOtherFeaturesPurityStats.max | quote }}
-  LN_OTHER_FEAT_PUR_MEAN: {{ printf "%v" .Values.config.lnOtherFeaturesPurityStats.mean | quote }}
-  LN_OTHER_FEAT_PUR_SD: {{ printf "%v" .Values.config.lnOtherFeaturesPurityStats.sd | quote }}
+  LN_OTHER_FEAT_PUR_MIN: {{ printf "%v" ((.Values.config.lnOtherFeaturesPurityStats | default dict).min | default 8.67) | quote }}
+  LN_OTHER_FEAT_PUR_MAX: {{ printf "%v" ((.Values.config.lnOtherFeaturesPurityStats | default dict).max | default 8.95) | quote }}
+  LN_OTHER_FEAT_PUR_MEAN: {{ printf "%v" ((.Values.config.lnOtherFeaturesPurityStats | default dict).mean | default 8.84) | quote }}
+  LN_OTHER_FEAT_PUR_SD: {{ printf "%v" ((.Values.config.lnOtherFeaturesPurityStats | default dict).sd | default 0.07) | quote }}
 
   OTHER_FEATURE_PREDOMINANCE_THRESHOLD_FOR_PURITY: {{ printf "%v" .Values.config.otherFeaturePredominanceThresholdForPurity | quote }}
 
