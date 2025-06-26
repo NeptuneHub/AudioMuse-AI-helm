@@ -20,12 +20,10 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: flask
     spec:
-      # Best Practice: Run as a non-root user for enhanced security.
-      # The Docker image must be built to support this (e.g., by creating user 1001 and setting permissions).
       securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
         - name: flask-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -34,9 +32,6 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "audiomuse-ai.fullname" . }}-env-vars
           env:
             - name: SERVICE_TYPE
               value: "flask"
@@ -75,6 +70,9 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
                   key: AI_CHAT_DB_USER_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: {{ include "audiomuse-ai.fullname" . }}-config
           resources:
             {{- toYaml .Values.flask.resources | nindent 12 }}
           volumeMounts:
@@ -87,7 +85,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "audiomuse-ai.fullname" . }}-flask
+  name: {{ include "audiomuse-ai.fullname" . }}-flask-service
   namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}

@@ -20,19 +20,14 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: worker
     spec:
-      # Best Practice: Run as a non-root user for enhanced security.
-      # The Docker image must be built to support this (e.g., by creating user 1001 and setting permissions).
       securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
         - name: rq-worker
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: {{ include "audiomuse-ai.fullname" . }}-env-vars
           env:
             - name: SERVICE_TYPE
               value: "worker"
@@ -71,6 +66,9 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
                   key: AI_CHAT_DB_USER_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: {{ include "audiomuse-ai.fullname" . }}-config
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           volumeMounts:
