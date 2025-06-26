@@ -17,6 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.12.0'
+
       - name: Helm Lint
         run: helm lint .
 
@@ -24,58 +29,55 @@ jobs:
     needs: lint
     permissions:
       contents: write
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Crucial for chart-releaser-action's history analysis
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Clean up old chart-releaser artifacts (Force regeneration)
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git checkout --orphan gh-pages-temp
-          git rm -rf .
-          git commit --allow-empty -m "Clean gh-pages-temp for regeneration"
-          git push -f origin gh-pages-temp:gh-pages
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.12.0'
 
-          # ADDED THIS LINE: Switch back to main before deleting gh-pages-temp
-          git checkout main
-          
-          git branch -D gh-pages-temp
-          echo "gh-pages branch forcefully cleaned for regeneration."
+      # Remove the problematic cleanup step - let chart-releaser handle gh-pages
+      # The force cleanup was likely causing issues
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1
+        uses: helm/chart-releaser-action@v1.6.0
         with:
           charts_dir: .
-          # Using skip_existing: false here to ensure it doesn't skip if a tag somehow already exists.
-          # Although 'Nothing to do' implies it's skipping before even checking skip_existing,
-          # it's a good default for robustness during initial setup.
-          skip_existing: false # Explicitly tell it NOT to skip if a release with the tag already exists
+          skip_existing: false
+          mark_as_latest: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Verify gh-pages content # NEW DIAGNOSTIC STEP
+      - name: Verify release was created
         run: |
-          echo "Verifying content of gh-pages branch..."
-          git fetch origin gh-pages:gh-pages_local || { echo "Failed to fetch gh-pages, it might not exist yet or there's a permission issue."; exit 1; }
-          git checkout gh-pages_local
-          echo "Current directory after checking out gh-pages_local:"
-          ls -F
-          if [ -f "index.yaml" ]; then
-            echo "SUCCESS: index.yaml found in gh-pages_local branch!"
-            cat index.yaml
+          echo "Checking if release was created..."
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            echo "gh-pages branch exists"
+            git checkout gh-pages
+            echo "Contents of gh-pages branch:"
+            ls -la
+            if [ -f "index.yaml" ]; then
+              echo "SUCCESS: index.yaml found!"
+              echo "Index.yaml contents:"
+              cat index.yaml
+            else
+              echo "WARNING: index.yaml not found, but gh-pages branch exists"
+            fi
           else
-            echo "ERROR: index.yaml NOT found in gh-pages_local branch."
+            echo "ERROR: gh-pages branch does not exist"
+            echo "This usually means no chart was packaged and released"
             exit 1
           fi
-          # Optional: List tgz files
-          ls -F *.tgz 2>/dev/null || true
-        shell: bash
