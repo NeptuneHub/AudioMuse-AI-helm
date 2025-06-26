@@ -6,32 +6,17 @@ on:
   push:
     branches:
       - main
-      - devel
     tags:
       - 'v*'
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Helm
-        uses: azure/setup-helm@v4
-        with:
-          version: '3.12.0'
-
-      - name: Helm Lint
-        run: helm lint .
-
   release:
-    needs: lint
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pages: write
       id-token: write
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,36 +33,57 @@ jobs:
         with:
           version: '3.12.0'
 
-      # Remove the problematic cleanup step - let chart-releaser handle gh-pages
-      # The force cleanup was likely causing issues
+      - name: Lint Helm Chart
+        run: helm lint .
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: .
-          skip_existing: false
-          mark_as_latest: true
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Verify release was created
+      - name: Get Chart Version
+        id: chart_version
         run: |
-          echo "Checking if release was created..."
-          git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            echo "gh-pages branch exists"
-            git checkout gh-pages
-            echo "Contents of gh-pages branch:"
-            ls -la
-            if [ -f "index.yaml" ]; then
-              echo "SUCCESS: index.yaml found!"
-              echo "Index.yaml contents:"
-              cat index.yaml
-            else
-              echo "WARNING: index.yaml not found, but gh-pages branch exists"
-            fi
+          VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Chart version: $VERSION"
+
+      - name: Package Helm Chart
+        run: |
+          helm package . --destination ./charts/
+          ls -la ./charts/
+
+      - name: Checkout gh-pages
+        run: |
+          git fetch origin gh-pages:gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
+
+      - name: Update Helm Repository
+        run: |
+          # Copy the new chart package
+          mkdir -p .
+          cp ./charts/*.tgz . || echo "No new packages to copy"
+          
+          # Generate the index
+          helm repo index . --url https://neptunehub.github.io/AudioMuse-AI-helm/
+          
+          # Show what we have
+          echo "Files in gh-pages:"
+          ls -la
+          echo ""
+          echo "Contents of index.yaml:"
+          cat index.yaml
+
+      - name: Commit and Push to gh-pages
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
           else
-            echo "ERROR: gh-pages branch does not exist"
-            echo "This usually means no chart was packaged and released"
-            exit 1
+            git commit -m "Release chart version ${{ steps.chart_version.outputs.version }}"
+            git push origin gh-pages
+            echo "Successfully pushed to gh-pages"
           fi
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./charts/*.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
