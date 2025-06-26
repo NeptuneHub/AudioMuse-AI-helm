@@ -12,9 +12,8 @@ data:
 
   # --- Internal Service Connectivity ---
   POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
-  POSTGRES_PORT: {{ .Values.postgres.service.port | quote }}
-  REDIS_URL: {{ printf "redis://%s-redis:%d/0" (include "audiomuse-ai.fullname" .) .Values.redis.service.port }}
-
+  POSTGRES_PORT: {{ int .Values.postgres.service.port }}
+  REDIS_URL: "redis://{{ include "audiomuse-ai.fullname" . }}-redis:{{ .Values.redis.service.port }}/0"
   # --- Core Application Settings ---
   TEMP_DIR: {{ .Values.config.tempDir | quote }}
   CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
