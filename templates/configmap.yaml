@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-config
-  namespace: {{ .Values.namespace.name }}
+  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
 data:
@@ -48,7 +48,7 @@ data:
   SCORE_WEIGHT_OTHER_FEATURE_PURITY: {{ .Values.config.scoreWeightOtherFeaturePurity | quote }}
   SCORE_WEIGHT_SILHOUETTE: {{ .Values.config.scoreWeightSilhouette | quote }}
   SCORE_WEIGHT_DAVIES_BOULDIN: {{ .Values.config.scoreWeightDaviesBouldin | quote }}
-  SCORE_WEIGHT_CALINSKI_HARABASZ: {{ .Values.config.scoreWeightCalinskiHarabasz | quote }}
+  SCORE_WEIGHT_CALINSKI_HARABASZ: {{ .Values.config.calinskiHarabasz | quote }}
   TOP_K_MOODS_FOR_PURITY_CALCULATION: {{ .Values.config.topKMoodsForPurityCalculation | quote }}
   LN_MOOD_DIVERSITY_MIN: {{ .Values.config.lnMoodDiversityStats.min | quote }}
   LN_MOOD_DIVERSITY_MAX: {{ .Values.config.lnMoodDiversityStats.max | quote }}

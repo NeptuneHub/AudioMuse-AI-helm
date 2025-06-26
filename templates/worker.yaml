@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-worker
-  namespace: {{ .Values.namespace.name }}
+  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: worker

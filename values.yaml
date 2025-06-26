@@ -4,7 +4,9 @@ fullnameOverride: ""
 nameOverride: ""
 
 namespace:
-  name: ""
+  name: "default-audiomuse-ns" # Reverted to a sensible default, or "default"
+                                # This is only used if --namespace is NOT specified
+                                # during helm install.
 
 image:
   repository: ghcr.io/neptunehub/audiomuse-ai
