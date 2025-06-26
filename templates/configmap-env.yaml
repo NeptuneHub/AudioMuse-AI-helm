@@ -12,7 +12,7 @@ data:
 
   # --- Internal Service Connectivity ---
   POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
-  POSTGRES_PORT: {{ int .Values.postgres.service.port }}
+  POSTGRES_PORT: {{ int .Values.postgres.service.port | quote }}
   REDIS_URL: "redis://{{ include "audiomuse-ai.fullname" . }}-redis:{{ .Values.redis.service.port }}/0"
   # --- Core Application Settings ---
   TEMP_DIR: {{ .Values.config.tempDir | quote }}
