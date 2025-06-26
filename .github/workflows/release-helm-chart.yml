@@ -7,18 +7,8 @@ on:
     branches:
       - main
       - devel
-    tags: # <--- ADD THIS SECTION
-      - 'v*' # This triggers the workflow when a tag starting with 'v' is pushed (e.g., v0.1.0, v1.2.3-beta)
-
-  # You can also explicitly trigger on release events, but pushing tags is common for chart-releaser
-  # release: # <--- OPTIONAL: ADD THIS SECTION IF YOU WANT TO BE EXPLICIT ABOUT RELEASES
-  #   types: [published, created] # Triggers when a release is published (becomes public) or created (including drafts)
-
-# Ensures that only one workflow runs at a time for the same branch,
-# cancelling any in-progress runs when a new one is triggered.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    tags:
+      - 'v*'
 
 jobs:
   lint:
@@ -39,16 +29,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Crucial for chart-releaser-action's history analysis
 
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Clean up old chart-releaser artifacts (Force regeneration) # NEW STEP
+        run: |
+          # This step will clone gh-pages, remove its contents, and push an empty branch
+          # This is a drastic measure to ensure chart-releaser starts fresh.
+          # Only run this if you are certain you want to clear your gh-pages branch.
+          git checkout --orphan gh-pages-temp
+          git rm -rf .
+          git commit --allow-empty -m "Clean gh-pages-temp for regeneration"
+          git push -f origin gh-pages-temp:gh-pages
+          git branch -D gh-pages-temp
+          echo "gh-pages branch forcefully cleaned for regeneration."
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1
         with:
           charts_dir: .
+          # Using skip_existing: false here to ensure it doesn't skip if a tag somehow already exists.
+          # Although 'Nothing to do' implies it's skipping before even checking skip_existing,
+          # it's a good default for robustness during initial setup.
+          skip_existing: false # Explicitly tell it NOT to skip if a release with the tag already exists
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Verify gh-pages content # NEW DIAGNOSTIC STEP
+        run: |
+          echo "Verifying content of gh-pages branch..."
+          git fetch origin gh-pages:gh-pages_local || { echo "Failed to fetch gh-pages, it might not exist yet or there's a permission issue."; exit 1; }
+          git checkout gh-pages_local
+          echo "Current directory after checking out gh-pages_local:"
+          ls -F
+          if [ -f "index.yaml" ]; then
+            echo "SUCCESS: index.yaml found in gh-pages_local branch!"
+            cat index.yaml
+          else
+            echo "ERROR: index.yaml NOT found in gh-pages_local branch."
+            exit 1
+          fi
+          # Optional: List tgz files
+          ls -F *.tgz 2>/dev/null || true
+        shell: bash

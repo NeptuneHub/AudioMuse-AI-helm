@@ -2,5 +2,5 @@ apiVersion: v2
 name: audiomuse-ai
 description: A Helm chart for deploying the AudioMuse-AI application suite.
 type: application
-version: 0.1.9 # Increment this version
+version: 0.2.0 # Increment this version
 appVersion: "0.3.4-beta"
