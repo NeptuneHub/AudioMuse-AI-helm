@@ -1,33 +1,4 @@
-# .github/workflows/release-helm-chart.yml
-
-name: Release Helm Chart
-
-on:
-  push:
-    branches:
-      - main
-      - devel
-    # Removed the 'paths' filter here.
-    # Now, any push to main or devel will trigger the workflow.
-
-# Ensures that only one workflow runs at a time for the same branch,
-# cancelling any in-progress runs when a new one is triggered.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Helm Lint
-        # Changed 'helm-chart' to '.' to lint from the root directory.
-        run: helm lint .
-
-  release:
+release:
     needs: lint # This job will only run if the 'lint' job succeeds.
     # Grant permissions to create a GitHub Release and push to the gh-pages branch.
     permissions:
@@ -49,11 +20,11 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1 # Use the latest v1.x.y release
         with:
-          # Changed 'helm-chart' to '.' to use the root directory as the chart directory.
           charts_dir: .
-          # If the push is to the 'devel' branch, mark the GitHub Release as a pre-release.
-          # Otherwise, it will be a full release.
-          prerelease: ${{ github.ref == 'refs/heads/devel' }}
+          # The 'prerelease' input has been removed based on the error message.
+          # If you need to mark a release as a pre-release on GitHub, you might need
+          # to add a separate step using actions/create-release or manually
+          # mark it on GitHub, or simply rely on chart versioning (e.g., 1.0.0-rc.1).
         env:
           # The chart-releaser action uses this token to create releases and push to gh-pages.
           # GITHUB_TOKEN is automatically provided by GitHub Actions.
