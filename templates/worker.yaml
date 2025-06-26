@@ -30,22 +30,12 @@ spec:
         - name: rq-worker
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "audiomuse-ai.fullname" . }}-env-vars
           env:
             - name: SERVICE_TYPE
               value: "worker"
-            # Environment variables from values.yaml
-            - name: JELLYFIN_URL
-              value: {{ .Values.jellyfin.url | quote }}
-            - name: OLLAMA_SERVER_URL
-              value: {{ .Values.config.ollamaServerUrl | quote }}
-            - name: POSTGRES_HOST
-              value: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
-            - name: POSTGRES_PORT
-              value: {{ .Values.postgres.service.port | quote }}
-            - name: REDIS_URL
-              value: {{ printf "redis://%s-redis:%d/0" (include "audiomuse-ai.fullname" .) .Values.redis.service.port | quote }}
-            - name: TEMP_DIR
-              value: {{ .Values.config.tempDir | quote }}
             - name: JELLYFIN_USER_ID
               valueFrom:
                 secretKeyRef:
@@ -81,16 +71,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
                   key: AI_CHAT_DB_USER_PASSWORD
-            - name: CLUSTER_ALGORITHM
-              value: {{ .Values.config.clusterAlgorithm | quote }}
-            - name: AI_MODEL_PROVIDER
-              value: {{ .Values.config.aiModelProvider | quote }}
-            - name: OLLAMA_MODEL_NAME
-              value: {{ .Values.config.ollamaModelName | quote }}
-            - name: GEMINI_MODEL_NAME
-              value: {{ .Values.config.geminiModelName | quote }}
-            - name: AI_CHAT_DB_USER_NAME
-              value: {{ .Values.config.aiChatDbUserName | quote }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           volumeMounts:

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "audiomuse-ai.fullname" . }}-env-vars
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "audiomuse-ai.labels" . | nindent 4 }}
+data:
+  # --- External Service URLs ---
+  JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
+  OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
+
+  # --- Internal Service Connectivity ---
+  POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
+  POSTGRES_PORT: {{ .Values.postgres.service.port | quote }}
+  REDIS_URL: {{ printf "redis://%s-redis:%d/0" (include "audiomuse-ai.fullname" .) .Values.redis.service.port }}
+
+  # --- Core Application Settings ---
+  TEMP_DIR: {{ .Values.config.tempDir | quote }}
+  CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
+  AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
+  OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
+  GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
+  AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}
