@@ -7,7 +7,15 @@ on:
     branches:
       - main
       - devel
+    tags: # <--- ADD THIS SECTION
+      - 'v*' # This triggers the workflow when a tag starting with 'v' is pushed (e.g., v0.1.0, v1.2.3-beta)
 
+  # You can also explicitly trigger on release events, but pushing tags is common for chart-releaser
+  # release: # <--- OPTIONAL: ADD THIS SECTION IF YOU WANT TO BE EXPLICIT ABOUT RELEASES
+  #   types: [published, created] # Triggers when a release is published (becomes public) or created (including drafts)
+
+# Ensures that only one workflow runs at a time for the same branch,
+# cancelling any in-progress runs when a new one is triggered.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -25,7 +33,7 @@ jobs:
   release:
     needs: lint
     permissions:
-      contents: write # This permission is crucial for creating releases and pushing to gh-pages
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,6 +49,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1
         with:
-          charts_dir: . # Tells the action your chart is in the root
+          charts_dir: .
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
