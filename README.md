@@ -48,3 +48,14 @@ config:
 For the full list of supported configuration values, refer to the [values.yaml file](https://github.com/NeptuneHub/AudioMuse-AI-helm/blob/main/values.yaml).
 
 For detailed documentation on each environment variable, visit the [AudioMuse-AI main repository](https://github.com/NeptuneHub/AudioMuse-AI).
+
+To be sure that you have the last updated chart version that match with the version of AudioMuse-AI that you want to install, just run this command:
+```
+helm search repo audiomuse-ai
+```
+
+You will have a result like this where you can check the **APP VERSION**:  (this is only an example)
+```
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION
+audiomuse-ai/audiomuse-ai       1.0.2           0.5.0-beta      A Helm chart for deploying the AudioMuse-AI app...
+```
