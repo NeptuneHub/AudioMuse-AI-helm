@@ -4,8 +4,6 @@ name: Release Helm Chart
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
   workflow_dispatch: # Allow manual trigger
