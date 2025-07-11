@@ -79,11 +79,17 @@ jellyfin:
   token: "e0b8c325bc1b426c81922b90c0aa2ff1"
   url: "http://jellyfin.192.168.3.131.nip.io:8087"
 
+navidrome:
+  user: "YOUR-USER"
+  password: "YOUR-PASSWORD"
+  url: "http://your_navidrome_url:4533"
+
 gemini:
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
 
 # Application configuration parameters from config.py
 config:
+  mediaServerType: "jellyfin"
   tempDir: "/app/temp_audio"
   maxDistance: 0.5
   maxSongsPerCluster: 0

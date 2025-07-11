@@ -70,6 +70,16 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
                   key: AI_CHAT_DB_USER_PASSWORD
+            - name: NAVIDROME_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-navidrome
+                  key: NAVIDROME_USER
+            - name: NAVIDROME_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-navidrome
+                  key: NAVIDROME_PASSWORD
           envFrom:
             - configMapRef:
                 name: {{ include "audiomuse-ai.fullname" . }}-env-vars
