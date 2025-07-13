@@ -83,8 +83,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "audiomuse-ai.fullname" . }}-env-vars
+          {{- if .Values.flask.resources }}
           resources:
             {{- toYaml .Values.flask.resources | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: app-temp-audio
               mountPath: /app/temp_audio
