@@ -15,7 +15,7 @@ helm install my-audiomuse audiomuse-ai/audiomuse-ai \
 
 ## Minimum Required `my-custom-values.yaml`
 
-Here is a minimal configuration example for your `my-custom-values.yaml`:
+Here is a minimal configuration example for your `my-custom-values.yaml` for **Jellyfin**:
 
 ```yaml
 postgres:
@@ -36,6 +36,36 @@ gemini:
 # AI Configuration
 # You can use "OLLAMA", "GEMINI", or "NONE" (some features will be disabled if NONE)
 config:
+  mediaServerType: "jellyfin"
+  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", or "NONE"
+  ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
+  ollamaModelName: "mistral:7b"
+  geminiModelName: "gemini-1.5-flash-latest"
+  aiChatDbUserName: "ai_user" # Must match postgres.aiChatDbUser
+```
+
+Here is a minimal configuration example for your `my-custom-values.yaml` for **Navidrome**:
+
+```yaml
+postgres:
+  user: "audiomuse"
+  password: "audiomusepassword" # IMPORTANT: Change this for production
+  aiChatDbUser: "ai_user"
+  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change this for production
+
+# IMPORTANT: Set the correct Navidrome values
+navidrome:
+  user: "YOUR-USER"
+  password: "YOUR-PASSWORD"
+  url: "http://your_navidrome_url:4533"
+
+gemini:
+  apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production
+
+# AI Configuration
+# You can use "OLLAMA", "GEMINI", or "NONE" (some features will be disabled if NONE)
+config:
+  mediaServerType: "navidrome"
   aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
