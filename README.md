@@ -8,7 +8,7 @@ This repository contains the Helm chart for deploying the [AudioMuse-AI app](htt
 helm repo add audiomuse-ai https://NeptuneHub.github.io/AudioMuse-AI-helm
 helm repo update
 helm install my-audiomuse audiomuse-ai/audiomuse-ai \
-  --namespace test \
+  --namespace playlist \
   --create-namespace \
   --values my-custom-values.yaml
 ```
@@ -26,8 +26,8 @@ postgres:
 
 # IMPORTANT: Set the correct Jellyfin values
 jellyfin:
-  userId: "0e45c44b3e2e4da7a2be11a72a1c8575"
-  token: "e0b8c325bc1b426c81922b90c0aa2ff1"
+  userId: "YOUR-USER-ID"
+  token: "YOUR-API-TOKEN"
   url: "http://jellyfin.192.168.3.131.nip.io:8087"
 
 gemini:
@@ -88,4 +88,11 @@ You will have a result like this where you can check the **APP VERSION**:  (this
 ```
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
 audiomuse-ai/audiomuse-ai       1.0.2           0.5.0-beta      A Helm chart for deploying the AudioMuse-AI app...
+```
+
+## How to uninstall
+It's helm, if you followed the above instraction you had deployed my-audiomuse in playlist namespace, to to remove it just run this command:
+
+```
+helm uninstall my-audiomuse -n test
 ```
