@@ -1,3 +1,7 @@
+![GitHub license](https://img.shields.io/github/license/neptunehub/AudioMuse-AI-helm.svg)
+![Latest Tag](https://img.shields.io/github/v/tag/neptunehub/AudioMuse-AI-helm?label=latest-tag)
+![Media Server Support: Jellyfin 10.10.7, Navidrome 0.57.0](https://img.shields.io/badge/Media%20Server-Jellyfin%2010.10.7%2C%20Navidrome%200.57.0-blue?style=flat-square&logo=server&logoColor=white)
+
 # AudioMuse-AI Helm Chart
 
 This repository contains the Helm chart for deploying the [AudioMuse-AI app](https://github.com/NeptuneHub/AudioMuse-AI).
