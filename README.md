@@ -5,7 +5,7 @@
 # AudioMuse-AI Helm Chart
 
 <p align="center">
-  <img src="https://github.com/NeptuneHub/AudioMuse-AI/blob/devel/screenshot/audiomuse.png?raw=true" alt="AudioMuse-AI Logo" width="180">
+  <img src="https://github.com/NeptuneHub/AudioMuse-AI/blob/devel/screenshot/audiomuse.png?raw=true" alt="AudioMuse-AI Logo" width="240">
 </p>
 
 This repository contains the Helm chart for deploying the [AudioMuse-AI app](https://github.com/NeptuneHub/AudioMuse-AI).
