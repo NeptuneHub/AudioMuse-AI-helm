@@ -65,6 +65,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-gemini
                   key: GEMINI_API_KEY
+            - name: MISTRAL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-mistral
+                  key: MISTRAL_API_KEY
             - name: AI_CHAT_DB_USER_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -80,6 +85,16 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-navidrome
                   key: NAVIDROME_PASSWORD
+            - name: LYRION_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-lyrion
+                  key: LYRION_USER
+            - name: LYRION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-lyrion
+                  key: LYRION_PASSWORD
           envFrom:
             - configMapRef:
                 name: {{ include "audiomuse-ai.fullname" . }}-env-vars

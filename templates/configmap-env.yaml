@@ -9,6 +9,7 @@ data:
   # --- External Service URLs ---
   JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
   NAVIDROME_URL: {{ .Values.navidrome.url | quote }}
+  LYRION_URL: {{ .Values.lyrion.url | quote }}
   OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
 
   # --- Internal Service Connectivity ---
@@ -22,4 +23,5 @@ data:
   AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
   OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
   GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
+  MISTRAL_MODEL_NAME: {{ .Values.mistral.modelName | quote }}
   AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}

@@ -70,8 +70,17 @@ navidrome:
   password: "YOUR-PASSWORD"
   url: "http://your_navidrome_url:4533"
 
+lyrion:
+  user: "YOUR-USER"
+  password: "YOUR-PASSWORD"
+  url: "http://YOUR-LYRION-URL"
+
 gemini:
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
+
+mistral:
+  apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
+  modelName: "ministral-3b-latest"
 
 # Application configuration parameters from config.py
 config:

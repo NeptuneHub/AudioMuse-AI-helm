@@ -1,6 +1,6 @@
 ![GitHub license](https://img.shields.io/github/license/neptunehub/AudioMuse-AI-helm.svg)
 ![Latest Tag](https://img.shields.io/github/v/tag/neptunehub/AudioMuse-AI-helm?label=latest-tag)
-![Media Server Support: Jellyfin 10.10.7, Navidrome 0.57.0](https://img.shields.io/badge/Media%20Server-Jellyfin%2010.10.7%2C%20Navidrome%200.57.0-blue?style=flat-square&logo=server&logoColor=white)
+![Media Server Support: Jellyfin 10.10.7, Navidrome 0.57.0, Lyrion](https://img.shields.io/badge/Media%20Server-Jellyfin%2010.10.7%2C%20Navidrome%200.57.0%2C%20Lyrion-blue?style=flat-square&logo=server&logoColor=white)
 
 # AudioMuse-AI Helm Chart
 
@@ -47,14 +47,18 @@ jellyfin:
 gemini:
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production
 
+mistral:
+  apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production
+
 # AI Configuration
-# You can use "OLLAMA", "GEMINI", or "NONE" (some features will be disabled if NONE)
+# You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
 config:
   mediaServerType: "jellyfin"
-  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", or "NONE"
+  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
   geminiModelName: "gemini-1.5-flash-latest"
+  mistralModelName: "ministral-3b-latest"
   aiChatDbUserName: "ai_user" # Must match postgres.aiChatDbUser
 ```
 
@@ -76,14 +80,51 @@ navidrome:
 gemini:
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production
 
+mistral:
+  apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production
+
 # AI Configuration
-# You can use "OLLAMA", "GEMINI", or "NONE" (some features will be disabled if NONE)
+# You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
 config:
   mediaServerType: "navidrome"
-  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", or "NONE"
+  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
   geminiModelName: "gemini-1.5-flash-latest"
+  mistralModelName: "ministral-3b-latest"
+  aiChatDbUserName: "ai_user" # Must match postgres.aiChatDbUser
+```
+
+Here is a minimal configuration example for your `my-custom-values.yaml` for **Lyrion**:
+
+```yaml
+postgres:
+  user: "audiomuse"
+  password: "audiomusepassword" # IMPORTANT: Change this for production
+  aiChatDbUser: "ai_user"
+  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change this for production
+
+# IMPORTANT: Set the correct Lyrion values
+lyrion:
+  user: "YOUR-USER"
+  password: "YOUR-PASSWORD"
+  url: "http://YOUR-LYRION-URL"
+
+gemini:
+  apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production
+
+mistral:
+  apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production
+
+# AI Configuration
+# You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
+config:
+  mediaServerType: "lyrion"
+  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
+  ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
+  ollamaModelName: "mistral:7b"
+  geminiModelName: "gemini-1.5-flash-latest"
+  mistralModelName: "ministral-3b-latest"
   aiChatDbUserName: "ai_user" # Must match postgres.aiChatDbUser
 ```
 
