@@ -2,8 +2,28 @@ apiVersion: v1
 entries:
   audiomuse-ai:
   - apiVersion: v2
+    appVersion: 0.7.1-beta
+    created: "2025-10-18T13:29:31.261664835Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: d955d2f33bbf8af85366e5e22865af364f26f5610ae90a14bb88282fa8cd5f18
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.19.tgz
+    version: 1.0.19
+  - apiVersion: v2
+    appVersion: 0.7.1-beta
+    created: "2025-10-18T13:29:31.445241289Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: d955d2f33bbf8af85366e5e22865af364f26f5610ae90a14bb88282fa8cd5f18
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.19.tgz
+    version: 1.0.19
+  - apiVersion: v2
     appVersion: 0.7.0-beta
-    created: "2025-10-10T22:24:50.42761497Z"
+    created: "2025-10-18T13:29:31.260680155Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: cdad1a9db605243be6ef37156b132446683fb77c720119ca2f46fec605e21f0b
     name: audiomuse-ai
@@ -13,7 +33,7 @@ entries:
     version: 1.0.18
   - apiVersion: v2
     appVersion: 0.7.0-beta
-    created: "2025-10-10T22:24:50.624178555Z"
+    created: "2025-10-18T13:29:31.443386093Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: cdad1a9db605243be6ef37156b132446683fb77c720119ca2f46fec605e21f0b
     name: audiomuse-ai
@@ -23,17 +43,7 @@ entries:
     version: 1.0.18
   - apiVersion: v2
     appVersion: 0.6.10-beta
-    created: "2025-10-10T22:24:50.623040912Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 907d102535292d0d040ac0b0defb6602070c94df83194e56251ca966410113db
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.17.tgz
-    version: 1.0.17
-  - apiVersion: v2
-    appVersion: 0.6.10-beta
-    created: "2025-10-10T22:24:50.426678195Z"
+    created: "2025-10-18T13:29:31.259737975Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 907d102535292d0d040ac0b0defb6602070c94df83194e56251ca966410113db
     name: audiomuse-ai
@@ -42,18 +52,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.17.tgz
     version: 1.0.17
   - apiVersion: v2
-    appVersion: 0.6.9-beta
-    created: "2025-10-10T22:24:50.425745548Z"
+    appVersion: 0.6.10-beta
+    created: "2025-10-18T13:29:31.441861674Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: e85c2891ecdc06493f2476c6e1df2783932a9a910f6e2e534164a881eb609709
+    digest: 907d102535292d0d040ac0b0defb6602070c94df83194e56251ca966410113db
     name: audiomuse-ai
     type: application
     urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.16.tgz
-    version: 1.0.16
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.17.tgz
+    version: 1.0.17
   - apiVersion: v2
     appVersion: 0.6.9-beta
-    created: "2025-10-10T22:24:50.621906495Z"
+    created: "2025-10-18T13:29:31.440907121Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: e85c2891ecdc06493f2476c6e1df2783932a9a910f6e2e534164a881eb609709
     name: audiomuse-ai
@@ -62,8 +72,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.16.tgz
     version: 1.0.16
   - apiVersion: v2
+    appVersion: 0.6.9-beta
+    created: "2025-10-18T13:29:31.258781738Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: e85c2891ecdc06493f2476c6e1df2783932a9a910f6e2e534164a881eb609709
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.16.tgz
+    version: 1.0.16
+  - apiVersion: v2
     appVersion: 0.6.8-beta
-    created: "2025-10-10T22:24:50.424798845Z"
+    created: "2025-10-18T13:29:31.257273911Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: a0ff0b0778f63946cee1ff72e309b2d29581d16df346cdf684f3ef01777387f2
     name: audiomuse-ai
@@ -73,7 +93,7 @@ entries:
     version: 1.0.15
   - apiVersion: v2
     appVersion: 0.6.8-beta
-    created: "2025-10-10T22:24:50.620769924Z"
+    created: "2025-10-18T13:29:31.43995957Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: a0ff0b0778f63946cee1ff72e309b2d29581d16df346cdf684f3ef01777387f2
     name: audiomuse-ai
@@ -83,7 +103,7 @@ entries:
     version: 1.0.15
   - apiVersion: v2
     appVersion: 0.6.7-beta
-    created: "2025-10-10T22:24:50.423756311Z"
+    created: "2025-10-18T13:29:31.2561283Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c7b077d7b93f953bab4d21ef912295bfa069265721ac29accb799557251ea83e
     name: audiomuse-ai
@@ -93,7 +113,7 @@ entries:
     version: 1.0.14
   - apiVersion: v2
     appVersion: 0.6.7-beta
-    created: "2025-10-10T22:24:50.619638342Z"
+    created: "2025-10-18T13:29:31.438987504Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c7b077d7b93f953bab4d21ef912295bfa069265721ac29accb799557251ea83e
     name: audiomuse-ai
@@ -103,17 +123,7 @@ entries:
     version: 1.0.14
   - apiVersion: v2
     appVersion: 0.6.6-beta
-    created: "2025-10-10T22:24:50.422623918Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 8bc8977d602eef1ad5b0a9621e19786994e89568392b5562fa2a5a879599b5fd
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.13.tgz
-    version: 1.0.13
-  - apiVersion: v2
-    appVersion: 0.6.6-beta
-    created: "2025-10-10T22:24:50.618490209Z"
+    created: "2025-10-18T13:29:31.438072554Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 8bc8977d602eef1ad5b0a9621e19786994e89568392b5562fa2a5a879599b5fd
     name: audiomuse-ai
@@ -122,8 +132,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.13.tgz
     version: 1.0.13
   - apiVersion: v2
+    appVersion: 0.6.6-beta
+    created: "2025-10-18T13:29:31.255031671Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 8bc8977d602eef1ad5b0a9621e19786994e89568392b5562fa2a5a879599b5fd
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.13.tgz
+    version: 1.0.13
+  - apiVersion: v2
     appVersion: 0.6.5-beta
-    created: "2025-10-10T22:24:50.61740785Z"
+    created: "2025-10-18T13:29:31.437171591Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 8fcdf99f465447de0174afde714d9ec3559ad19245a4538b1ae59417c60dc901
     name: audiomuse-ai
@@ -133,7 +153,7 @@ entries:
     version: 1.0.12
   - apiVersion: v2
     appVersion: 0.6.5-beta
-    created: "2025-10-10T22:24:50.421532201Z"
+    created: "2025-10-18T13:29:31.253922118Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 8fcdf99f465447de0174afde714d9ec3559ad19245a4538b1ae59417c60dc901
     name: audiomuse-ai
@@ -143,7 +163,7 @@ entries:
     version: 1.0.12
   - apiVersion: v2
     appVersion: 0.6.4-beta
-    created: "2025-10-10T22:24:50.420415948Z"
+    created: "2025-10-18T13:29:31.252965681Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c492e66a2506803c227e2dca4e33b5a7735a41c601ca3270b26a27a0a5b823f1
     name: audiomuse-ai
@@ -153,7 +173,7 @@ entries:
     version: 1.0.11
   - apiVersion: v2
     appVersion: 0.6.4-beta
-    created: "2025-10-10T22:24:50.616369584Z"
+    created: "2025-10-18T13:29:31.436255149Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c492e66a2506803c227e2dca4e33b5a7735a41c601ca3270b26a27a0a5b823f1
     name: audiomuse-ai
@@ -163,7 +183,7 @@ entries:
     version: 1.0.11
   - apiVersion: v2
     appVersion: 0.6.3-beta
-    created: "2025-10-10T22:24:50.61528435Z"
+    created: "2025-10-18T13:29:31.435349276Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 73e026d35bd4fa86a0b6bfee8e9f3c4e2a5d3e596805a2295c6b5ee7a4d1ac49
     name: audiomuse-ai
@@ -173,7 +193,7 @@ entries:
     version: 1.0.10
   - apiVersion: v2
     appVersion: 0.6.3-beta
-    created: "2025-10-10T22:24:50.41938188Z"
+    created: "2025-10-18T13:29:31.251908726Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 73e026d35bd4fa86a0b6bfee8e9f3c4e2a5d3e596805a2295c6b5ee7a4d1ac49
     name: audiomuse-ai
@@ -183,17 +203,7 @@ entries:
     version: 1.0.10
   - apiVersion: v2
     appVersion: 0.6.2-beta
-    created: "2025-10-10T22:24:50.630839844Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: d20c91182f4aff74c4de4a4f20c58274e2a26e189dcf55379854c46c6e2ba472
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.9.tgz
-    version: 1.0.9
-  - apiVersion: v2
-    appVersion: 0.6.2-beta
-    created: "2025-10-10T22:24:50.433180174Z"
+    created: "2025-10-18T13:29:31.267176804Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: d20c91182f4aff74c4de4a4f20c58274e2a26e189dcf55379854c46c6e2ba472
     name: audiomuse-ai
@@ -202,18 +212,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.9.tgz
     version: 1.0.9
   - apiVersion: v2
-    appVersion: 0.6.1-beta
-    created: "2025-10-10T22:24:50.432255091Z"
+    appVersion: 0.6.2-beta
+    created: "2025-10-18T13:29:31.457563763Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 78550180b0b4182fb5e9228dc3686de5d56a14819b7dbf650b1832e46918d17c
+    digest: d20c91182f4aff74c4de4a4f20c58274e2a26e189dcf55379854c46c6e2ba472
     name: audiomuse-ai
     type: application
     urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.8.tgz
-    version: 1.0.8
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.9.tgz
+    version: 1.0.9
   - apiVersion: v2
     appVersion: 0.6.1-beta
-    created: "2025-10-10T22:24:50.629735964Z"
+    created: "2025-10-18T13:29:31.455489628Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 78550180b0b4182fb5e9228dc3686de5d56a14819b7dbf650b1832e46918d17c
     name: audiomuse-ai
@@ -223,7 +233,17 @@ entries:
     version: 1.0.8
   - apiVersion: v2
     appVersion: 0.6.1-beta
-    created: "2025-10-10T22:24:50.431331171Z"
+    created: "2025-10-18T13:29:31.266257567Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 78550180b0b4182fb5e9228dc3686de5d56a14819b7dbf650b1832e46918d17c
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.8.tgz
+    version: 1.0.8
+  - apiVersion: v2
+    appVersion: 0.6.1-beta
+    created: "2025-10-18T13:29:31.265356753Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: ffa6cf4f0357f59833635695d17a36ddc8c7efa03d6d0224ea7280a0e5be3792
     name: audiomuse-ai
@@ -233,7 +253,7 @@ entries:
     version: 1.0.7
   - apiVersion: v2
     appVersion: 0.6.1-beta
-    created: "2025-10-10T22:24:50.628623669Z"
+    created: "2025-10-18T13:29:31.453476496Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: ffa6cf4f0357f59833635695d17a36ddc8c7efa03d6d0224ea7280a0e5be3792
     name: audiomuse-ai
@@ -243,7 +263,7 @@ entries:
     version: 1.0.7
   - apiVersion: v2
     appVersion: 0.6.0-beta
-    created: "2025-10-10T22:24:50.430400929Z"
+    created: "2025-10-18T13:29:31.264416717Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 3e6e2aa84609b20434ee89802d163437969c9cfe052a62257997125bc2b02038
     name: audiomuse-ai
@@ -253,7 +273,7 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: 0.6.0-beta
-    created: "2025-10-10T22:24:50.627485545Z"
+    created: "2025-10-18T13:29:31.451368047Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 3e6e2aa84609b20434ee89802d163437969c9cfe052a62257997125bc2b02038
     name: audiomuse-ai
@@ -263,17 +283,7 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: 0.6.0-beta
-    created: "2025-10-10T22:24:50.429481236Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 476b5b389087785bf89295a466b8534cb58067bf1aecbdc564dae3511b93c1a0
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.3.tgz
-    version: 1.0.3
-  - apiVersion: v2
-    appVersion: 0.6.0-beta
-    created: "2025-10-10T22:24:50.626378259Z"
+    created: "2025-10-18T13:29:31.449313067Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 476b5b389087785bf89295a466b8534cb58067bf1aecbdc564dae3511b93c1a0
     name: audiomuse-ai
@@ -282,8 +292,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
+    appVersion: 0.6.0-beta
+    created: "2025-10-18T13:29:31.263497299Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 476b5b389087785bf89295a466b8534cb58067bf1aecbdc564dae3511b93c1a0
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     appVersion: 0.5.0-beta
-    created: "2025-10-10T22:24:50.428556815Z"
+    created: "2025-10-18T13:29:31.262578332Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 4ad48bf27a92f57fe27d5eed09d3f577f8b889304429d7aea7005da47892a3c2
     name: audiomuse-ai
@@ -293,7 +313,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 0.5.0-beta
-    created: "2025-10-10T22:24:50.625280721Z"
+    created: "2025-10-18T13:29:31.447286641Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 4ad48bf27a92f57fe27d5eed09d3f577f8b889304429d7aea7005da47892a3c2
     name: audiomuse-ai
@@ -303,17 +323,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 0.4.0-beta
-    created: "2025-10-10T22:24:50.614171794Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 6855d8f1d40d138e8a9ae24401bbfd9dd6636e03fbddd8004ddc7ddc440fab2d
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.1.tgz
-    version: 1.0.1
-  - apiVersion: v2
-    appVersion: 0.4.0-beta
-    created: "2025-10-10T22:24:50.418261329Z"
+    created: "2025-10-18T13:29:31.250719735Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 6855d8f1d40d138e8a9ae24401bbfd9dd6636e03fbddd8004ddc7ddc440fab2d
     name: audiomuse-ai
@@ -322,8 +332,18 @@ entries:
     - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
+    appVersion: 0.4.0-beta
+    created: "2025-10-18T13:29:31.434430439Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 6855d8f1d40d138e8a9ae24401bbfd9dd6636e03fbddd8004ddc7ddc440fab2d
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     appVersion: 0.3.5-beta
-    created: "2025-10-10T22:24:50.613305382Z"
+    created: "2025-10-18T13:29:31.433701768Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c1496171303e120ce0dcea810aa6fe1e3937004ed427cf62a1227090e8982cef
     name: audiomuse-ai
@@ -333,7 +353,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.3.5-beta
-    created: "2025-10-10T22:24:50.417386982Z"
+    created: "2025-10-18T13:29:31.249918458Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c1496171303e120ce0dcea810aa6fe1e3937004ed427cf62a1227090e8982cef
     name: audiomuse-ai
@@ -343,17 +363,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.416710768Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 79d83d9b79e8df099dd16630102fc9dc7973344ec500de1eef711929a940880c
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.4.7.tgz
-    version: 0.4.7
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.612517487Z"
+    created: "2025-10-18T13:29:31.433050912Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 79d83d9b79e8df099dd16630102fc9dc7973344ec500de1eef711929a940880c
     name: audiomuse-ai
@@ -363,7 +373,17 @@ entries:
     version: 0.4.7
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.416049883Z"
+    created: "2025-10-18T13:29:31.249143459Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 79d83d9b79e8df099dd16630102fc9dc7973344ec500de1eef711929a940880c
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.4.7.tgz
+    version: 0.4.7
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.248355968Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 587d280f5c7eab1219043545e9fd5d39a3ee798becf641cf827b51d714613224
     name: audiomuse-ai
@@ -373,7 +393,7 @@ entries:
     version: 0.4.6
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.611806217Z"
+    created: "2025-10-18T13:29:31.432390818Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 587d280f5c7eab1219043545e9fd5d39a3ee798becf641cf827b51d714613224
     name: audiomuse-ai
@@ -383,7 +403,7 @@ entries:
     version: 0.4.6
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.415364302Z"
+    created: "2025-10-18T13:29:31.247667391Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c0b7f14bcf30ac3f3b0a342f3c7ff3696b8add2648d68c3b7a2b5de0b592a0c4
     name: audiomuse-ai
@@ -393,7 +413,7 @@ entries:
     version: 0.4.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.611109865Z"
+    created: "2025-10-18T13:29:31.431750853Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c0b7f14bcf30ac3f3b0a342f3c7ff3696b8add2648d68c3b7a2b5de0b592a0c4
     name: audiomuse-ai
@@ -403,17 +423,7 @@ entries:
     version: 0.4.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.414683229Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 2eeba140edf8ed29402d5097e5be4431f158baf51706680d30f0f11a65cbc394
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.4.4.tgz
-    version: 0.4.4
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.610413133Z"
+    created: "2025-10-18T13:29:31.431083155Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 2eeba140edf8ed29402d5097e5be4431f158baf51706680d30f0f11a65cbc394
     name: audiomuse-ai
@@ -423,7 +433,17 @@ entries:
     version: 0.4.4
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.413965567Z"
+    created: "2025-10-18T13:29:31.246966391Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 2eeba140edf8ed29402d5097e5be4431f158baf51706680d30f0f11a65cbc394
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.4.4.tgz
+    version: 0.4.4
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.24622165Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 65d0d1105bf91ce9e094c3f527d338e8f284c2eb2462104f08853f6f0b14978f
     name: audiomuse-ai
@@ -433,7 +453,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.609639466Z"
+    created: "2025-10-18T13:29:31.430371265Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 65d0d1105bf91ce9e094c3f527d338e8f284c2eb2462104f08853f6f0b14978f
     name: audiomuse-ai
@@ -443,17 +463,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.573246196Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: c6c7d33d64b0059e8093ba663cbc2d8ff523dd6963ba80bd3bc51172942604fd
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.9.tgz
-    version: 0.3.9
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.376620074Z"
+    created: "2025-10-18T13:29:31.209300714Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c6c7d33d64b0059e8093ba663cbc2d8ff523dd6963ba80bd3bc51172942604fd
     name: audiomuse-ai
@@ -463,7 +473,17 @@ entries:
     version: 0.3.9
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.34261717Z"
+    created: "2025-10-18T13:29:31.393516006Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: c6c7d33d64b0059e8093ba663cbc2d8ff523dd6963ba80bd3bc51172942604fd
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.9.tgz
+    version: 0.3.9
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.176237584Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: a5a5c499c8f60319924900a30930210f104f3b6d431bff1ffb0aea4237273d5c
     name: audiomuse-ai
@@ -473,7 +493,7 @@ entries:
     version: 0.3.8
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.536372182Z"
+    created: "2025-10-18T13:29:31.362248053Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: a5a5c499c8f60319924900a30930210f104f3b6d431bff1ffb0aea4237273d5c
     name: audiomuse-ai
@@ -483,7 +503,7 @@ entries:
     version: 0.3.8
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.319498957Z"
+    created: "2025-10-18T13:29:31.15330074Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c35e2b843e06efce170a2d55146a786924e0ae05b1e35ce6602c85250162ca31
     name: audiomuse-ai
@@ -493,7 +513,7 @@ entries:
     version: 0.3.7
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.503464451Z"
+    created: "2025-10-18T13:29:31.337786127Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: c35e2b843e06efce170a2d55146a786924e0ae05b1e35ce6602c85250162ca31
     name: audiomuse-ai
@@ -503,17 +523,7 @@ entries:
     version: 0.3.7
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.484365619Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 38e8b3895d9e4a767d94c921601cdafbd27c5c8f16e112786dcf05d0d6840a9a
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.6.tgz
-    version: 0.3.6
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.293717471Z"
+    created: "2025-10-18T13:29:31.133070731Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 38e8b3895d9e4a767d94c921601cdafbd27c5c8f16e112786dcf05d0d6840a9a
     name: audiomuse-ai
@@ -523,7 +533,17 @@ entries:
     version: 0.3.6
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.467721537Z"
+    created: "2025-10-18T13:29:31.31701106Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 38e8b3895d9e4a767d94c921601cdafbd27c5c8f16e112786dcf05d0d6840a9a
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.6.tgz
+    version: 0.3.6
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.30220332Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 7aaa33e5aada40206318f9b3b0787670f92f54724e539e8c0018e5143b9a4b8f
     name: audiomuse-ai
@@ -533,7 +553,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.279053576Z"
+    created: "2025-10-18T13:29:31.119213687Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 7aaa33e5aada40206318f9b3b0787670f92f54724e539e8c0018e5143b9a4b8f
     name: audiomuse-ai
@@ -543,7 +563,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.459749286Z"
+    created: "2025-10-18T13:29:31.293625773Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 6e18c78f476ab8afd45826a4c7a75ef18a65ac24cf325f31750e56a8ba61b226
     name: audiomuse-ai
@@ -553,7 +573,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.268592846Z"
+    created: "2025-10-18T13:29:31.111278801Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 6e18c78f476ab8afd45826a4c7a75ef18a65ac24cf325f31750e56a8ba61b226
     name: audiomuse-ai
@@ -563,17 +583,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.453602266Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 790857a997800d00d1d21a7308a3c34e631eac224d4babd35f58972b84cc7d9c
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.3.tgz
-    version: 0.3.3
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.257726145Z"
+    created: "2025-10-18T13:29:31.103065555Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 790857a997800d00d1d21a7308a3c34e631eac224d4babd35f58972b84cc7d9c
     name: audiomuse-ai
@@ -583,7 +593,17 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.448456963Z"
+    created: "2025-10-18T13:29:31.287380033Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 790857a997800d00d1d21a7308a3c34e631eac224d4babd35f58972b84cc7d9c
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.3.3.tgz
+    version: 0.3.3
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.282286035Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 1532a96088a7df9a937b8512a3f6720b47a7b9a2c4b6a6b4b803db3ded8aa134
     name: audiomuse-ai
@@ -593,7 +613,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.248924303Z"
+    created: "2025-10-18T13:29:31.097708706Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 1532a96088a7df9a937b8512a3f6720b47a7b9a2c4b6a6b4b803db3ded8aa134
     name: audiomuse-ai
@@ -603,7 +623,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.243442123Z"
+    created: "2025-10-18T13:29:31.092418646Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 0f62a48300124d8195c8ee772b8a19556b1df394dda76b477b28a264eb064ee4
     name: audiomuse-ai
@@ -613,7 +633,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.444489239Z"
+    created: "2025-10-18T13:29:31.278342336Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 0f62a48300124d8195c8ee772b8a19556b1df394dda76b477b28a264eb064ee4
     name: audiomuse-ai
@@ -623,7 +643,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.441737024Z"
+    created: "2025-10-18T13:29:31.275549228Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 94db7c0be55ff0e99df24453414a6fc4ee352990f1ba8ecb00780859428777a3
     name: audiomuse-ai
@@ -633,7 +653,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.240716639Z"
+    created: "2025-10-18T13:29:31.089223035Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 94db7c0be55ff0e99df24453414a6fc4ee352990f1ba8ecb00780859428777a3
     name: audiomuse-ai
@@ -643,7 +663,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.43932488Z"
+    created: "2025-10-18T13:29:31.273188326Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 5a9ea2c6262916b84890581d79e20f4cfc272555bd67da97b8619bfbd9d17a0a
     name: audiomuse-ai
@@ -653,7 +673,7 @@ entries:
     version: 0.2.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.237600022Z"
+    created: "2025-10-18T13:29:31.086163839Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 5a9ea2c6262916b84890581d79e20f4cfc272555bd67da97b8619bfbd9d17a0a
     name: audiomuse-ai
@@ -663,7 +683,7 @@ entries:
     version: 0.2.5
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.437254359Z"
+    created: "2025-10-18T13:29:31.271216502Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: e3891f06132896e4156041210814d4ee90e0ecf460b6d0fb4c36f8b09ef7fa73
     name: audiomuse-ai
@@ -673,7 +693,7 @@ entries:
     version: 0.2.4
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.235624581Z"
+    created: "2025-10-18T13:29:31.084183329Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: e3891f06132896e4156041210814d4ee90e0ecf460b6d0fb4c36f8b09ef7fa73
     name: audiomuse-ai
@@ -683,17 +703,7 @@ entries:
     version: 0.2.4
   - apiVersion: v2
     appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.233411421Z"
-    description: A Helm chart for deploying the AudioMuse-AI application suite.
-    digest: 9ba060f2a5f988f1a80118da3bf8e59711078cc42efb1ce2f582430fdcd15883
-    name: audiomuse-ai
-    type: application
-    urls:
-    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.2.3.tgz
-    version: 0.2.3
-  - apiVersion: v2
-    appVersion: 0.3.4-beta
-    created: "2025-10-10T22:24:50.435068642Z"
+    created: "2025-10-18T13:29:31.269061967Z"
     description: A Helm chart for deploying the AudioMuse-AI application suite.
     digest: 9ba060f2a5f988f1a80118da3bf8e59711078cc42efb1ce2f582430fdcd15883
     name: audiomuse-ai
@@ -701,4 +711,14 @@ entries:
     urls:
     - https://neptunehub.github.io/AudioMuse-AI-helm/charts/audiomuse-ai-0.2.3.tgz
     version: 0.2.3
-generated: "2025-10-10T22:24:50.231272131Z"
+  - apiVersion: v2
+    appVersion: 0.3.4-beta
+    created: "2025-10-18T13:29:31.081992084Z"
+    description: A Helm chart for deploying the AudioMuse-AI application suite.
+    digest: 9ba060f2a5f988f1a80118da3bf8e59711078cc42efb1ce2f582430fdcd15883
+    name: audiomuse-ai
+    type: application
+    urls:
+    - https://neptunehub.github.io/AudioMuse-AI-helm/audiomuse-ai-0.2.3.tgz
+    version: 0.2.3
+generated: "2025-10-18T13:29:31.07985949Z"
