@@ -75,6 +75,9 @@ lyrion:
   password: "YOUR-PASSWORD"
   url: "http://YOUR-LYRION-URL"
 
+openai:
+  apiKey: "YOUR_OPENAI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
+
 gemini:
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
 
