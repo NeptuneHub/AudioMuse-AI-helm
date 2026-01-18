@@ -66,6 +66,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "audiomuse-ai.fullname" . }}-mistral
                   key: MISTRAL_API_KEY
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "audiomuse-ai.fullname" . }}-openai
+                  key: OPENAI_API_KEY
             - name: AI_CHAT_DB_USER_PASSWORD
               valueFrom:
                 secretKeyRef:
