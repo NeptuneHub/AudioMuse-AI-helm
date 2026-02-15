@@ -3,7 +3,8 @@ name: audiomuse-ai
 description: A Helm chart for deploying the AudioMuse-AI application suite.
 type: application
 version: 1.0.38 # Increment this version
-appVersion: "0.8.9"
+appVersion: "0.8.10"
+
 
 
 
