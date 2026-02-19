@@ -22,7 +22,7 @@ spec:
     spec:
       {{- with .Values.flask.nodeSelector }}
       nodeSelector:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
         runAsUser: 0

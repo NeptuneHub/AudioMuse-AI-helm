@@ -24,7 +24,7 @@ spec:
     spec:
       {{- with .Values.postgres.nodeSelector }}
       nodeSelector:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: postgres
