@@ -161,6 +161,8 @@ config:
   otherFeaturePredominanceThresholdForPurity: 0.3
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
+  openaiServerUrl: "https://api.openai.com/v1/chat/completions"
+  openaiModelName: "gpt-5-mini"
   geminiModelName: "gemini-1.5-flash-latest"
   aiChatDbUserName: "ai_user"
   topNOtherFeatures: 2
