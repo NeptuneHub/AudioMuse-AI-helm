@@ -55,7 +55,7 @@ mistral:
 # You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
 config:
   mediaServerType: "jellyfin"
-  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
+  aiModelProvider: "NONE" # Options: "OPENAI", "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
   geminiModelName: "gemini-1.5-flash-latest"
@@ -88,7 +88,7 @@ mistral:
 # You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
 config:
   mediaServerType: "navidrome"
-  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
+  aiModelProvider: "NONE" # Options: "OPENAI", "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
   geminiModelName: "gemini-1.5-flash-latest"
@@ -121,7 +121,7 @@ mistral:
 # You can use "OLLAMA", "GEMINI", "MISTRAL", or "NONE" (some features will be disabled if NONE)
 config:
   mediaServerType: "lyrion"
-  aiModelProvider: "NONE" # Options: "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
+  aiModelProvider: "NONE" # Options: "OPENAI", "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
   ollamaModelName: "mistral:7b"
   geminiModelName: "gemini-1.5-flash-latest"

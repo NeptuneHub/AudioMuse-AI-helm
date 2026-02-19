@@ -22,6 +22,8 @@ data:
   CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
   AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
   OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
+  OPENAI_SERVER_URL: {{ .Values.config.openaiServerUrl | quote }}
+  OPENAI_MODEL_NAME: {{ .Values.config.openaiModelName | quote }}
   GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
   MISTRAL_MODEL_NAME: {{ .Values.mistral.modelName | quote }}
   AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}
