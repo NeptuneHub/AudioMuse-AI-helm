@@ -22,7 +22,10 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: redis
     spec:
-      nodeSelector: {{- toYaml .Values.redis.nodeSelector | nindent 8 }}
+      {{- with .Values.redis.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: redis
           image: "{{ .Values.redis.image }}"

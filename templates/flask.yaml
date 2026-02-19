@@ -20,7 +20,10 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: flask
     spec:
-      nodeSelector: {{- toYaml .Values.flask.nodeSelector | nindent 8 }}
+      {{- with .Values.flask.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       securityContext:
         runAsUser: 0
         runAsGroup: 0

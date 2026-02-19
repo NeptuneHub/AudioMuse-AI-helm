@@ -22,7 +22,10 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: postgres
     spec:
-      nodeSelector: {{- toYaml .Values.postgres.nodeSelector | nindent 8 }}
+      {{- with .Values.postgres.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: postgres
           image: "{{ .Values.postgres.image }}"
