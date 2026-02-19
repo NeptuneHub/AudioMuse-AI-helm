@@ -22,7 +22,10 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: postgres
     spec:
-      securityContext: {{- toYaml .Values.postgres.securityContext | nindent 8 }}
+      {{- with .Values.postgres.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: postgres
           image: "{{ .Values.postgres.image }}"
