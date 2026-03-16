@@ -13,9 +13,9 @@ data:
   OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
 
   # --- Internal Service Connectivity ---
-  POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
+  POSTGRES_HOST: {{ include "audiomuse-ai.fullname" . }}-postgres.{{ .Release.Namespace }}.svc.cluster.local
   POSTGRES_PORT: {{ int .Values.postgres.service.port | quote }}
-  REDIS_URL: "redis://{{ include "audiomuse-ai.fullname" . }}-redis:{{ .Values.redis.service.port }}/0"
+  REDIS_URL: "redis://{{ include "audiomuse-ai.fullname" . }}-redis.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.service.port }}/0"
   # --- Core Application Settings ---
   MEDIASERVER_TYPE: {{ .Values.config.mediaServerType | quote }}
   TEMP_DIR: {{ .Values.config.tempDir | quote }}
