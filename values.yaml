@@ -17,77 +17,123 @@ image:
 flask:
   replicaCount: 1
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8000
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 15
+    periodSeconds: 20
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 5
+    periodSeconds: 10
   # nodeSelector: {}
 
 worker:
   replicaCount: 3
+  livenessProbe:
+    exec:
+      command:
+        - python
+        - -c
+        - "import os, redis; redis.from_url(os.environ['REDIS_URL']).ping()"
+    initialDelaySeconds: 15
+    periodSeconds: 30
+  readinessProbe:
+    exec:
+      command:
+        - python
+        - -c
+        - "import os, redis; redis.from_url(os.environ['REDIS_URL']).ping()"
+    initialDelaySeconds: 5
+    periodSeconds: 15
   # nodeSelector: {}
 
 redis:
   # nodeSelector: {}
   enabled: true
+  external:
+    url: ""           # e.g. "redis://my-redis-cluster:6379/0"
   image: "redis:7-alpine"
   service:
     port: 6379
-  resources:
-    requests:
-      cpu: "200m"
-      memory: "256Mi"
-    limits:
-      cpu: "1"
-      memory: "512Mi"
+  resources: {}
+  # resources:
+  #   requests:
+  #     cpu: "200m"
+  #     memory: "256Mi"
+  #   limits:
+  #     cpu: "1"
+  #     memory: "512Mi"
 
 postgres:
   # nodeSelector: {}
   enabled: true
+  external:
+    host: ""          # e.g. "audiomuse-postgresql-rw" (CNPG rw service)
+    port: 5432
   image: "postgres:15-alpine"
   user: "audiomuse"
   password: "audiomusepassword" # IMPORTANT: Change this for production or use --set
   db: "audiomusedb"
   aiChatDbUser: "ai_user"
   aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change this for production or use --set
+  aiChatDbExistingSecret: ""  # when set, skips creating the ai-chat-db Secret (must contain key: AI_CHAT_DB_USER_PASSWORD)
+  existingSecret: ""
+  existingSecretKeys:
+    user: "POSTGRES_USER"
+    password: "POSTGRES_PASSWORD"
+    db: "POSTGRES_DB"
   service:
     port: 5432
   persistence:
     enabled: true
     size: 5Gi
     # storageClassName: "your-storage-class" # Uncomment and specify if needed
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "256Mi"
-    limits:
-      cpu: "1"
-      memory: "2Gi"
+  resources: {}
+  # resources:
+  #   requests:
+  #     cpu: "250m"
+  #     memory: "256Mi"
+  #   limits:
+  #     cpu: "1"
+  #     memory: "2Gi"
 
 # Credentials and external service configurations
 # IMPORTANT: For production, manage these secrets securely, e.g., with Sealed Secrets or Vault.
 jellyfin:
-  userId: "0e45c44b3e2e4da7a2be11a72a1c8575"
-  token: "e0b8c325bc1b426c81922b90c0aa2ff1"
-  url: "http://jellyfin.192.168.3.131.nip.io:8087"
+  existingSecret: ""
+  userId: "YOUR_JELLYFIN_USER_ID"     # IMPORTANT: Set to your Jellyfin user ID or use --set / existingSecret
+  token: "YOUR_JELLYFIN_TOKEN"        # IMPORTANT: Set to your Jellyfin access token or use --set / existingSecret
+  url: "http://your_jellyfin_url:8096" # IMPORTANT: Set to your Jellyfin base URL
 
 navidrome:
+  existingSecret: ""
   user: "YOUR-USER"
   password: "YOUR-PASSWORD"
   url: "http://your_navidrome_url:4533"
 
 lyrion:
+  existingSecret: ""
   user: "YOUR-USER"
   password: "YOUR-PASSWORD"
   url: "http://YOUR-LYRION-URL"
 
 openai:
+  existingSecret: ""
   apiKey: "YOUR_OPENAI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
 
 gemini:
+  existingSecret: ""
   apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
 
 mistral:
+  existingSecret: ""
   apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
-  modelName: "ministral-3b-latest"
 
 # Application configuration parameters from config.py
 config:
@@ -168,6 +214,7 @@ config:
   openaiServerUrl: "https://api.openai.com/v1/chat/completions"
   openaiModelName: "gpt-5-mini"
   geminiModelName: "gemini-1.5-flash-latest"
+  mistralModelName: "ministral-3b-latest"
   aiChatDbUserName: "ai_user"
   topNOtherFeatures: 2
   energyMin: 0.01
@@ -177,3 +224,31 @@ config:
   minSongsPerGenreForStratification: 100
   stratifiedSamplingTargetPercentile: 50
   samplingPercentageChangePerRun: 0.2
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false   # app writes to /app/temp_audio
+  runAsNonRoot: true
+  capabilities:
+    drop: ["ALL"]
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: audiomuse.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+serviceAccount:
+  create: false
+  name: ""
+  annotations: {}
