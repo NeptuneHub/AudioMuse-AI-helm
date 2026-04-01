@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-worker
-  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: worker
@@ -20,86 +19,35 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: worker
     spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "audiomuse-ai.fullname" .) }}
+      {{- else if .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- end }}
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: rq-worker
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          {{- with .Values.worker.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.worker.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: SERVICE_TYPE
               value: "worker"
-            - name: JELLYFIN_USER_ID
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-jellyfin
-                  key: user_id
-            - name: JELLYFIN_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-jellyfin
-                  key: api_token
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_DB
-            - name: GEMINI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-gemini
-                  key: GEMINI_API_KEY
-            - name: MISTRAL_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-mistral
-                  key: MISTRAL_API_KEY
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-openai
-                  key: OPENAI_API_KEY
-            - name: AI_CHAT_DB_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-ai-chat-db
-                  key: AI_CHAT_DB_USER_PASSWORD
-            - name: NAVIDROME_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-navidrome
-                  key: NAVIDROME_USER
-            - name: NAVIDROME_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-navidrome
-                  key: NAVIDROME_PASSWORD
-            - name: LYRION_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-lyrion
-                  key: LYRION_USER
-            - name: LYRION_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-lyrion
-                  key: LYRION_PASSWORD
+            {{- include "audiomuse-ai.secretEnvVars" . | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ include "audiomuse-ai.fullname" . }}-env-vars

@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-postgres
-  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgres
@@ -38,23 +37,25 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_USER
+                  name: {{ .Values.postgres.existingSecret | default (printf "%s-postgres" (include "audiomuse-ai.fullname" .)) }}
+                  key: {{ if .Values.postgres.existingSecret }}{{ .Values.postgres.existingSecretKeys.user | default "POSTGRES_USER" }}{{ else }}POSTGRES_USER{{ end }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_PASSWORD
+                  name: {{ .Values.postgres.existingSecret | default (printf "%s-postgres" (include "audiomuse-ai.fullname" .)) }}
+                  key: {{ if .Values.postgres.existingSecret }}{{ .Values.postgres.existingSecretKeys.password | default "POSTGRES_PASSWORD" }}{{ else }}POSTGRES_PASSWORD{{ end }}
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "audiomuse-ai.fullname" . }}-postgres
-                  key: POSTGRES_DB
+                  name: {{ .Values.postgres.existingSecret | default (printf "%s-postgres" (include "audiomuse-ai.fullname" .)) }}
+                  key: {{ if .Values.postgres.existingSecret }}{{ .Values.postgres.existingSecretKeys.db | default "POSTGRES_DB" }}{{ else }}POSTGRES_DB{{ end }}
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
+          {{- with .Values.postgres.resources }}
           resources:
-            {{- toYaml .Values.postgres.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: postgres-storage
           {{- if .Values.postgres.persistence.enabled }}
@@ -68,7 +69,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-postgres
-  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgres
