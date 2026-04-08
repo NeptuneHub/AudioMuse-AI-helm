@@ -10,7 +10,7 @@ namespace:
 
 image:
   repository: ghcr.io/neptunehub/audiomuse-ai
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart's appVersion.
   tag: ""
 
@@ -35,22 +35,8 @@ flask:
 
 worker:
   replicaCount: 1
-  livenessProbe:
-    exec:
-      command:
-        - python
-        - -c
-        - "import os, redis; redis.from_url(os.environ['REDIS_URL']).ping()"
-    initialDelaySeconds: 15
-    periodSeconds: 30
-  readinessProbe:
-    exec:
-      command:
-        - python
-        - -c
-        - "import os, redis; redis.from_url(os.environ['REDIS_URL']).ping()"
-    initialDelaySeconds: 5
-    periodSeconds: 15
+  # livenessProbe: {}
+  # readinessProbe: {}
   # nodeSelector: {}
 
 redis:
