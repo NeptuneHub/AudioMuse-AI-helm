@@ -267,40 +267,6 @@ ingress:
 
 ---
 
-## Security Context
-
-Pods run as UID/GID 1000 by default (non-root). You can override either context:
-
-```yaml
-podSecurityContext:
-  runAsUser: 1000   # Verify this matches the UID in the container image
-  runAsGroup: 1000
-  fsGroup: 1000
-
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: false   # app writes to /app/temp_audio
-  runAsNonRoot: true
-  capabilities:
-    drop: ["ALL"]
-```
-
-To run as root (opt-in, not recommended for production):
-
-```yaml
-podSecurityContext:
-  runAsUser: 0
-  runAsGroup: 0
-  fsGroup: 0
-
-containerSecurityContext:
-  allowPrivilegeEscalation: true
-  runAsNonRoot: false
-  capabilities: {}
-```
-
----
-
 ## Additional Configuration
 
 For the full list of supported configuration values, refer to the [values.yaml file](https://github.com/NeptuneHub/AudioMuse-AI-helm/blob/main/values.yaml).

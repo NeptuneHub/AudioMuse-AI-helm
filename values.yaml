@@ -223,14 +223,15 @@ config:
   samplingPercentageChangePerRun: 0.2
 
 podSecurityContext:
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
 
 containerSecurityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: false   # app writes to /app/temp_audio
-  runAsNonRoot: true
+  runAsUser: 0
+  runAsGroup: 0
   capabilities:
     drop: ["ALL"]
 
