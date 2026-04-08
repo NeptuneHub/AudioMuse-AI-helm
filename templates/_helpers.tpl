@@ -83,21 +83,27 @@ correctly when existingSecret is empty.
       name: {{ .Values.lyrion.existingSecret | default (printf "%s-lyrion" (include "audiomuse-ai.fullname" .)) }}
       key: LYRION_PASSWORD
 {{- end }}
+{{- if ne .Values.auth.user "" }}
 - name: AUDIOMUSE_USER
   valueFrom:
     secretKeyRef:
       name: {{ .Values.auth.existingSecret | default (printf "%s-auth" (include "audiomuse-ai.fullname" .)) }}
       key: {{ if .Values.auth.existingSecret }}{{ .Values.auth.existingSecretKeys.user | default "AUDIOMUSE_USER" }}{{ else }}AUDIOMUSE_USER{{ end }}
+{{- end }}
+{{- if ne .Values.auth.password "" }}
 - name: AUDIOMUSE_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ .Values.auth.existingSecret | default (printf "%s-auth" (include "audiomuse-ai.fullname" .)) }}
       key: {{ if .Values.auth.existingSecret }}{{ .Values.auth.existingSecretKeys.password | default "AUDIOMUSE_PASSWORD" }}{{ else }}AUDIOMUSE_PASSWORD{{ end }}
+{{- end }}
+{{- if ne .Values.auth.apiToken "" }}
 - name: API_TOKEN
   valueFrom:
     secretKeyRef:
       name: {{ .Values.auth.existingSecret | default (printf "%s-auth" (include "audiomuse-ai.fullname" .)) }}
       key: {{ if .Values.auth.existingSecret }}{{ .Values.auth.existingSecretKeys.apiToken | default "API_TOKEN" }}{{ else }}API_TOKEN{{ end }}
+{{- end }}
 - name: POSTGRES_USER
   valueFrom:
     secretKeyRef:
