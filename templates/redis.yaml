@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-redis
-  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: redis
@@ -33,14 +32,15 @@ spec:
             - name: redis
               containerPort: 6379
               protocol: TCP
+          {{- with .Values.redis.resources }}
           resources:
-            {{- toYaml .Values.redis.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "audiomuse-ai.fullname" . }}-redis
-  namespace: {{ .Release.Namespace }} # Use .Release.Namespace
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: redis

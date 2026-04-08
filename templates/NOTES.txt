@@ -1,0 +1,23 @@
+AudioMuse-AI has been deployed!
+
+{{- if .Values.ingress.enabled }}
+Access the application at:
+  {{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+  {{- end }}
+{{- else }}
+Access the application from your local machine using port-forwarding:
+  kubectl port-forward svc/{{ include "audiomuse-ai.fullname" . }}-flask-service 8080:{{ .Values.flask.service.port }} -n {{ .Release.Namespace }}
+
+Then open http://localhost:8080 in your browser.
+
+To obtain an external IP instead, install or upgrade with:
+  --set flask.service.type=LoadBalancer
+and then check the assigned address with:
+  kubectl get svc {{ include "audiomuse-ai.fullname" . }}-flask-service -n {{ .Release.Namespace }}
+{{- end }}
+
+Media server: {{ .Values.config.mediaServerType }}
+AI provider:  {{ .Values.config.aiModelProvider }}
+PostgreSQL:   {{ if .Values.postgres.enabled }}built-in{{ else }}external ({{ .Values.postgres.external.host | default "<host not set>" }}:{{ .Values.postgres.external.port }}){{ end }}
+Redis:        {{ if .Values.redis.enabled }}built-in{{ else }}external{{ end }}
