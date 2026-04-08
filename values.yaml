@@ -17,7 +17,7 @@ image:
 flask:
   replicaCount: 1
   service:
-    type: ClusterIP
+    type: LoadBalancer
     port: 8000
   livenessProbe:
     httpGet:
