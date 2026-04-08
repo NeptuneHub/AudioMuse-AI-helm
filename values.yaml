@@ -135,6 +135,17 @@ mistral:
   existingSecret: ""
   apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
 
+auth:
+  enabled: true
+  user: ""
+  password: ""
+  apiToken: ""
+  existingSecret: ""
+  existingSecretKeys:
+    user: "AUDIOMUSE_USER"
+    password: "AUDIOMUSE_PASSWORD"
+    apiToken: "API_TOKEN"
+
 # Application configuration parameters from config.py
 config:
   mediaServerType: "jellyfin"

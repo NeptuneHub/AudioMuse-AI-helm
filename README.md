@@ -67,6 +67,12 @@ config:
   mediaServerType: "jellyfin"
   aiModelProvider: "NONE" # Options: "OPENAI", "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
   aiChatDbUserName: "ai_user"
+
+auth:
+  enabled: true
+  user: "YOUR_AUDIOMUSE_USER"
+  password: "YOUR_AUDIOMUSE_PASSWORD"
+  apiToken: "YOUR_API_TOKEN"
 ```
 
 ### Navidrome
@@ -87,6 +93,12 @@ config:
   mediaServerType: "navidrome"
   aiModelProvider: "NONE"
   aiChatDbUserName: "ai_user"
+
+auth:
+  enabled: true
+  user: "YOUR_AUDIOMUSE_USER"
+  password: "YOUR_AUDIOMUSE_PASSWORD"
+  apiToken: "YOUR_API_TOKEN"
 ```
 
 ### Lyrion
@@ -107,6 +119,12 @@ config:
   mediaServerType: "lyrion"
   aiModelProvider: "NONE"
   aiChatDbUserName: "ai_user"
+
+auth:
+  enabled: true
+  user: "YOUR_AUDIOMUSE_USER"
+  password: "YOUR_AUDIOMUSE_PASSWORD"
+  apiToken: "YOUR_API_TOKEN"
 ```
 
 ### Enabling an AI provider
@@ -209,6 +227,9 @@ navidrome:
 
 lyrion:
   existingSecret: "my-lyrion-secret"     # must contain keys: LYRION_USER, LYRION_PASSWORD
+
+auth:
+  existingSecret: "my-auth-secret"       # must contain keys: AUDIOMUSE_USER, AUDIOMUSE_PASSWORD, API_TOKEN
 
 openai:
   existingSecret: "my-openai-secret"     # must contain key: OPENAI_API_KEY

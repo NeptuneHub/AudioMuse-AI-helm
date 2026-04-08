@@ -9,6 +9,7 @@ data:
   JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
   NAVIDROME_URL: {{ .Values.navidrome.url | quote }}
   LYRION_URL: {{ .Values.lyrion.url | quote }}
+  AUTH_ENABLED: {{ if not (hasKey .Values.auth "enabled") }}"true"{{ else if eq (printf "%v" .Values.auth.enabled) "" }}"true"{{ else }}{{ .Values.auth.enabled | quote }}{{ end }}
   OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
 
   # --- Internal Service Connectivity ---
