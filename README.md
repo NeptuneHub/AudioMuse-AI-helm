@@ -245,7 +245,8 @@ mistral:
 
 ## Ingress
 
-The chart ships an Ingress template that is **disabled by default**. The Flask service defaults to `ClusterIP`, making it natural to front it with an Ingress controller.
+The chart ships an Ingress template that is **disabled by default**. The Flask service defaults to `LoadBalancer` so by default you can reach normally the service to `publicip:8000`. 
+This heml chart also provide an optional Ingress controller that you can anbled adding the below example in your `values.yaml`, this example assume the use of letsencrypy certificate.
 
 ```yaml
 ingress:
