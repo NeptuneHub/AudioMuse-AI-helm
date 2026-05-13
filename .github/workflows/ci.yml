@@ -40,7 +40,10 @@ jobs:
             --set postgres.external.port=5433 > /tmp/t2.yaml
           grep -q 'POSTGRES_HOST: "my-pg.example.com"' /tmp/t2.yaml
           grep -q 'POSTGRES_PORT: "5433"' /tmp/t2.yaml
-          ! grep -q 'name: test2-audiomuse-ai-postgres$' /tmp/t2.yaml || (echo "Built-in postgres should NOT be deployed" && exit 1)
+          # Expect 3 deployments (flask + worker + redis); no built-in postgres Deployment or PVC
+          DEPLOYMENTS=$(grep -c '^kind: Deployment' /tmp/t2.yaml)
+          [ "$DEPLOYMENTS" = "3" ] || (echo "Expected 3 deployments (flask+worker+redis), found $DEPLOYMENTS" && exit 1)
+          ! grep -q '^kind: PersistentVolumeClaim' /tmp/t2.yaml || (echo "PVC should NOT exist with external postgres" && exit 1)
 
       - name: Test 3 — Built-in postgres + external redis
         run: |
@@ -48,6 +51,9 @@ jobs:
             --set redis.enabled=false \
             --set redis.external.url="redis://my-redis.example.com:6379/2" > /tmp/t3.yaml
           grep -q 'REDIS_URL: "redis://my-redis.example.com:6379/2"' /tmp/t3.yaml
+          # Expect 3 deployments (flask + worker + postgres); no built-in redis
+          DEPLOYMENTS=$(grep -c '^kind: Deployment' /tmp/t3.yaml)
+          [ "$DEPLOYMENTS" = "3" ] || (echo "Expected 3 deployments (flask+worker+postgres), found $DEPLOYMENTS" && exit 1)
 
       - name: Test 4 — Both external (no built-in pg/redis pods)
         run: |
