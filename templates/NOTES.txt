@@ -6,15 +6,10 @@ Access the application at:
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
   {{- end }}
 {{- else }}
-Access the application from your local machine using port-forwarding:
-  kubectl port-forward svc/{{ include "audiomuse-ai.fullname" . }}-flask-service 8080:{{ .Values.flask.service.port }} -n {{ .Release.Namespace }}
-
-Then open http://localhost:8080 in your browser.
-
-To obtain an external IP instead, install or upgrade with:
-  --set flask.service.type=LoadBalancer
-and then check the assigned address with:
+Get the LoadBalancer external IP:
   kubectl get svc {{ include "audiomuse-ai.fullname" . }}-flask-service -n {{ .Release.Namespace }}
+
+Then open http://<EXTERNAL-IP>:{{ .Values.flask.service.port }} in your browser.
 {{- end }}
 
 Infrastructure:
