@@ -8,6 +8,8 @@ namespace:
                                 # This is only used if --namespace is NOT specified
                                 # during helm install.
 
+timezone: "UTC"   # Sets TZ environment variable in containers
+
 image:
   repository: ghcr.io/neptunehub/audiomuse-ai
   pullPolicy: Always
@@ -66,9 +68,6 @@ postgres:
   user: "audiomuse"
   password: "audiomusepassword" # IMPORTANT: Change this for production or use --set
   db: "audiomusedb"
-  aiChatDbUser: "ai_user"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change this for production or use --set
-  aiChatDbExistingSecret: ""  # when set, skips creating the ai-chat-db Secret (must contain key: AI_CHAT_DB_USER_PASSWORD)
   existingSecret: ""
   existingSecretKeys:
     user: "POSTGRES_USER"
@@ -88,139 +87,6 @@ postgres:
   #   limits:
   #     cpu: "1"
   #     memory: "2Gi"
-
-# Credentials and external service configurations
-# IMPORTANT: For production, manage these secrets securely, e.g., with Sealed Secrets or Vault.
-jellyfin:
-  existingSecret: ""
-  userId: "YOUR_JELLYFIN_USER_ID"     # IMPORTANT: Set to your Jellyfin user ID or use --set / existingSecret
-  token: "YOUR_JELLYFIN_TOKEN"        # IMPORTANT: Set to your Jellyfin access token or use --set / existingSecret
-  url: "http://your_jellyfin_url:8096" # IMPORTANT: Set to your Jellyfin base URL
-
-navidrome:
-  existingSecret: ""
-  user: "YOUR-USER"
-  password: "YOUR-PASSWORD"
-  url: "http://your_navidrome_url:4533"
-
-lyrion:
-  existingSecret: ""
-  user: "YOUR-USER"
-  password: "YOUR-PASSWORD"
-  url: "http://YOUR-LYRION-URL"
-
-openai:
-  existingSecret: ""
-  apiKey: "YOUR_OPENAI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
-
-gemini:
-  existingSecret: ""
-  apiKey: "YOUR_GEMINI_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
-
-mistral:
-  existingSecret: ""
-  apiKey: "YOUR_MISTRAL_API_KEY_HERE" # IMPORTANT: Change this for production or use --set
-
-auth:
-  enabled: true
-  user: ""
-  password: ""
-  apiToken: ""
-  existingSecret: ""
-  existingSecretKeys:
-    user: "AUDIOMUSE_USER"
-    password: "AUDIOMUSE_PASSWORD"
-    apiToken: "API_TOKEN"
-
-# Application configuration parameters from config.py
-config:
-  mediaServerType: "jellyfin"
-  tempDir: "/app/temp_audio"
-  maxDistance: 0.5
-  maxSongsPerCluster: 0
-  maxSongsPerArtist: 3
-  numRecentAlbums: 0
-  clusterAlgorithm: "kmeans"
-  aiModelProvider: "NONE"
-  enableClusteringEmbeddings: false
-  dbscanEpsMin: 0.1
-  dbscanEpsMax: 0.5
-  dbscanMinSamplesMin: 5
-  dbscanMinSamplesMax: 20
-  numClustersMin: 40
-  numClustersMax: 100
-  useMinibatchKmeans: true
-  minibatchKmeansProcessingBatchSize: 1000
-  gmmNComponentsMin: 40
-  gmmNComponentsMax: 100
-  gmmCovarianceType: "full"
-  pcaComponentsMin: 0
-  pcaComponentsMax: 8
-  clusteringRuns: 5000
-  maxQueuedAnalysisJobs: 100
-  iterationsPerBatchJob: 20
-  maxConcurrentBatchJobs: 10
-  dbFetchChunkSize: 1000
-  topNElites: 10
-  exploitationStartFraction: 0.2
-  exploitationProbability: 0.7
-  mutationIntAbsDelta: 3
-  mutationFloatAbsDelta: 0.05
-  mutationKmeansCoordFraction: 0.05
-  scoreWeightDiversity: 2.0
-  scoreWeightPurity: 1.0
-  scoreWeightOtherFeatureDiversity: 0.0
-  scoreWeightOtherFeaturePurity: 0.0
-  scoreWeightSilhouette: 0.0
-  scoreWeightDaviesBouldin: 0.0
-  scoreWeightCalinskiHarabasz: 0.0
-  topKMoodsForPurityCalculation: 3
-  lnMoodDiversityStats:
-    min: -0.1863
-    max: 1.5518
-    mean: 0.9995
-    sd: 0.3541
-  lnMoodDiversityEmbeddingStats:
-    min: -0.174
-    max: 0.570
-    mean: -0.101
-    sd: 0.245
-  lnMoodPurityStats:
-    min: 0.6981
-    max: 7.2848
-    mean: 5.8679
-    sd: 1.1557
-  lnMoodPurityEmbeddingStats:
-    min: -0.494
-    max: 2.583
-    mean: 0.673
-    sd: 1.063
-  lnOtherFeaturesDiversityStats:
-    min: -0.19
-    max: 2.06
-    mean: 1.5
-    sd: 0.46
-  lnOtherFeaturesPurityStats:
-    min: 8.67
-    max: 8.95
-    mean: 8.84
-    sd: 0.07
-  otherFeaturePredominanceThresholdForPurity: 0.3
-  ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
-  ollamaModelName: "mistral:7b"
-  openaiServerUrl: "https://api.openai.com/v1/chat/completions"
-  openaiModelName: "gpt-5-mini"
-  geminiModelName: "gemini-1.5-flash-latest"
-  mistralModelName: "ministral-3b-latest"
-  aiChatDbUserName: "ai_user"
-  topNOtherFeatures: 2
-  energyMin: 0.01
-  energyMax: 0.15
-  tempoMinBpm: 40.0
-  tempoMaxBpm: 200.0
-  minSongsPerGenreForStratification: 100
-  stratifiedSamplingTargetPercentile: 50
-  samplingPercentageChangePerRun: 0.2
 
 podSecurityContext:
   runAsUser: 0

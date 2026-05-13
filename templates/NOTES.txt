@@ -17,7 +17,8 @@ and then check the assigned address with:
   kubectl get svc {{ include "audiomuse-ai.fullname" . }}-flask-service -n {{ .Release.Namespace }}
 {{- end }}
 
-Media server: {{ .Values.config.mediaServerType }}
-AI provider:  {{ .Values.config.aiModelProvider }}
+Infrastructure:
 PostgreSQL:   {{ if .Values.postgres.enabled }}built-in{{ else }}external ({{ .Values.postgres.external.host | default "<host not set>" }}:{{ .Values.postgres.external.port }}){{ end }}
 Redis:        {{ if .Values.redis.enabled }}built-in{{ else }}external{{ end }}
+
+Application configuration (media servers, AI providers, auth, etc.) is managed through the app's setup wizard at first startup.

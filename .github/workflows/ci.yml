@@ -1,0 +1,109 @@
+name: CI - Lint & Template Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  helm-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.3.1
+        with:
+          version: 'v3.19.0'
+
+      - name: Helm lint
+        run: helm lint .
+
+      - name: Test 1 — Default (built-in postgres + built-in redis)
+        run: |
+          helm template test1 . > /tmp/t1.yaml
+          grep -q 'POSTGRES_HOST: test1-audiomuse-ai-postgres' /tmp/t1.yaml
+          grep -q 'POSTGRES_PORT: "5432"' /tmp/t1.yaml
+          grep -q 'REDIS_URL: "redis://test1-audiomuse-ai-redis:6379/0"' /tmp/t1.yaml
+          grep -q 'TZ: "UTC"' /tmp/t1.yaml
+
+      - name: Test 2 — External postgres + built-in redis
+        run: |
+          helm template test2 . \
+            --set postgres.enabled=false \
+            --set postgres.external.host=my-pg.example.com \
+            --set postgres.external.port=5433 > /tmp/t2.yaml
+          grep -q 'POSTGRES_HOST: "my-pg.example.com"' /tmp/t2.yaml
+          grep -q 'POSTGRES_PORT: "5433"' /tmp/t2.yaml
+          ! grep -q 'name: test2-audiomuse-ai-postgres$' /tmp/t2.yaml || (echo "Built-in postgres should NOT be deployed" && exit 1)
+
+      - name: Test 3 — Built-in postgres + external redis
+        run: |
+          helm template test3 . \
+            --set redis.enabled=false \
+            --set redis.external.url="redis://my-redis.example.com:6379/2" > /tmp/t3.yaml
+          grep -q 'REDIS_URL: "redis://my-redis.example.com:6379/2"' /tmp/t3.yaml
+
+      - name: Test 4 — Both external (no built-in pg/redis pods)
+        run: |
+          helm template test4 . \
+            --set postgres.enabled=false \
+            --set postgres.external.host=ext-pg \
+            --set redis.enabled=false \
+            --set redis.external.url="redis://ext-redis:6379/0" > /tmp/t4.yaml
+          ! grep -q 'kind: PersistentVolumeClaim' /tmp/t4.yaml || (echo "PVC should NOT exist" && exit 1)
+          DEPLOYMENTS=$(grep -c '^kind: Deployment' /tmp/t4.yaml)
+          [ "$DEPLOYMENTS" = "2" ] || (echo "Expected 2 deployments, found $DEPLOYMENTS" && exit 1)
+
+      - name: Test 5 — existingSecret (no chart-managed secret)
+        run: |
+          helm template test5 . \
+            --set postgres.existingSecret=my-pg-credentials > /tmp/t5.yaml
+          ! grep -q 'kind: Secret' /tmp/t5.yaml || (echo "Chart-managed Secret should NOT exist when existingSecret is set" && exit 1)
+          grep -q 'name: my-pg-credentials' /tmp/t5.yaml
+
+      - name: Test 6 — existingSecret with custom keys (CNPG-style)
+        run: |
+          helm template test6 . \
+            --set postgres.existingSecret=cnpg-secret \
+            --set postgres.existingSecretKeys.user=username \
+            --set postgres.existingSecretKeys.password=password \
+            --set postgres.existingSecretKeys.db=database > /tmp/t6.yaml
+          grep -q 'key: username' /tmp/t6.yaml
+          grep -q 'key: password' /tmp/t6.yaml
+          grep -q 'key: database' /tmp/t6.yaml
+
+      - name: Test 7 — Custom timezone
+        run: |
+          helm template test7 . --set timezone="Europe/Rome" > /tmp/t7.yaml
+          grep -q 'TZ: "Europe/Rome"' /tmp/t7.yaml
+
+      - name: Test 8 — Required guards fire on misconfiguration
+        run: |
+          ! helm template test8 . --set postgres.enabled=false 2>/dev/null || (echo "Should have failed: postgres.external.host missing" && exit 1)
+          ! helm template test8 . --set redis.enabled=false 2>/dev/null || (echo "Should have failed: redis.external.url missing" && exit 1)
+
+      - name: Test 9 — Full BYO (external pg+redis with existingSecret)
+        run: |
+          helm template prod . \
+            --set postgres.enabled=false \
+            --set postgres.external.host=pg.prod.svc.cluster.local \
+            --set postgres.existingSecret=my-pg-credentials \
+            --set redis.enabled=false \
+            --set redis.external.url="redis://redis.prod.svc.cluster.local:6379/0" > /tmp/t9.yaml
+          ! grep -q 'kind: Secret' /tmp/t9.yaml
+          ! grep -q 'kind: PersistentVolumeClaim' /tmp/t9.yaml
+          DEPLOYMENTS=$(grep -c '^kind: Deployment' /tmp/t9.yaml)
+          [ "$DEPLOYMENTS" = "2" ] || (echo "Expected 2 deployments, found $DEPLOYMENTS" && exit 1)
+
+      - name: Test 10 — No stray references to removed config sections
+        run: |
+          if grep -rn "\.Values\.jellyfin\|\.Values\.navidrome\|\.Values\.lyrion\|\.Values\.openai\|\.Values\.gemini\|\.Values\.mistral\|\.Values\.auth\|\.Values\.config\." templates/ values.yaml values-example.yaml 2>/dev/null; then
+            echo "Found stray references to removed sections"
+            exit 1
+          fi

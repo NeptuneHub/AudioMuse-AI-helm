@@ -5,34 +5,17 @@ metadata:
   labels:
     {{- include "audiomuse-ai.labels" . | nindent 4 }}
 data:
-  # --- External Service URLs ---
-  JELLYFIN_URL: {{ .Values.jellyfin.url | quote }}
-  NAVIDROME_URL: {{ .Values.navidrome.url | quote }}
-  LYRION_URL: {{ .Values.lyrion.url | quote }}
-  AUTH_ENABLED: {{ if not (hasKey .Values.auth "enabled") }}"true"{{ else if eq (printf "%v" .Values.auth.enabled) "" }}"true"{{ else }}{{ .Values.auth.enabled | quote }}{{ end }}
-  OLLAMA_SERVER_URL: {{ .Values.config.ollamaServerUrl | quote }}
+  TZ: {{ .Values.timezone | default "UTC" | quote }}
 
-  # --- Internal Service Connectivity ---
   {{- if .Values.postgres.enabled }}
   POSTGRES_HOST: {{ printf "%s-postgres" (include "audiomuse-ai.fullname" .) }}
   POSTGRES_PORT: {{ int .Values.postgres.service.port | quote }}
   {{- else }}
-  POSTGRES_HOST: {{ required "postgres.external.host must be set in values.yaml when postgres.enabled=false" .Values.postgres.external.host | quote }}
+  POSTGRES_HOST: {{ required "postgres.external.host must be set when postgres.enabled=false" .Values.postgres.external.host | quote }}
   POSTGRES_PORT: {{ int .Values.postgres.external.port | quote }}
   {{- end }}
   {{- if .Values.redis.enabled }}
   REDIS_URL: "redis://{{ include "audiomuse-ai.fullname" . }}-redis:{{ .Values.redis.service.port }}/0"
   {{- else }}
-  REDIS_URL: {{ required "redis.external.url must be set in values.yaml when redis.enabled=false" .Values.redis.external.url | quote }}
+  REDIS_URL: {{ required "redis.external.url must be set when redis.enabled=false" .Values.redis.external.url | quote }}
   {{- end }}
-  # --- Core Application Settings ---
-  MEDIASERVER_TYPE: {{ .Values.config.mediaServerType | quote }}
-  TEMP_DIR: {{ .Values.config.tempDir | quote }}
-  CLUSTER_ALGORITHM: {{ .Values.config.clusterAlgorithm | quote }}
-  AI_MODEL_PROVIDER: {{ .Values.config.aiModelProvider | quote }}
-  OLLAMA_MODEL_NAME: {{ .Values.config.ollamaModelName | quote }}
-  OPENAI_SERVER_URL: {{ .Values.config.openaiServerUrl | quote }}
-  OPENAI_MODEL_NAME: {{ .Values.config.openaiModelName | quote }}
-  GEMINI_MODEL_NAME: {{ .Values.config.geminiModelName | quote }}
-  MISTRAL_MODEL_NAME: {{ .Values.config.mistralModelName | quote }}
-  AI_CHAT_DB_USER_NAME: {{ .Values.config.aiChatDbUserName | quote }}
