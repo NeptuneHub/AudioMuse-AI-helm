@@ -22,6 +22,7 @@ This repository contains the Helm chart for deploying the [AudioMuse-AI app](htt
 - [What this chart manages](#what-this-chart-manages)
 - [Installation](#installation)
 - [Minimum Required Configuration](#minimum-required-my-custom-valuesyaml)
+- [Choosing the AudioMuse-AI version](#choosing-the-audiomuse-ai-version)
 - [External PostgreSQL (e.g. CloudNativePG)](#external-postgresql-eg-cloudnativepg)
 - [External Redis](#external-redis)
 - [Bring Your Own Secrets (`existingSecret`)](#bring-your-own-secrets-existingsecret)
@@ -60,6 +61,23 @@ postgres:
 
 timezone: "Europe/Rome"               # optional, defaults to UTC
 ```
+
+---
+
+## Choosing the AudioMuse-AI version
+
+By default the chart pulls **`latest`** from `ghcr.io/neptunehub/audiomuse-ai`, so no chart update is needed when a new app release ships.
+
+To pin a specific version for reproducible deployments, set `image.tag` in your values:
+
+```yaml
+image:
+  tag: "1.1.3"
+```
+
+Available tags: https://github.com/NeptuneHub/AudioMuse-AI/pkgs/container/audiomuse-ai
+
+> **Tip:** `latest` is convenient but non-reproducible — a re-deploy can pull a newer image. For production, pin to a specific tag and bump it intentionally.
 
 ---
 
@@ -169,7 +187,7 @@ Example output:
 
 ```
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-audiomuse-ai/audiomuse-ai       1.1.5           1.1.3           A Helm chart for deploying the AudioMuse-AI app...
+audiomuse-ai/audiomuse-ai       1.1.5           latest          A Helm chart for deploying the AudioMuse-AI app...
 ```
 
 ---
