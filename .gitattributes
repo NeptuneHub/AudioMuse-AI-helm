@@ -1,0 +1,3 @@
+# Normalize all text files to LF line endings on commit.
+# Prevents CRLF from sneaking in when contributors use Windows.
+* text=auto eol=lf

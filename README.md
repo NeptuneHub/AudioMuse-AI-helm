@@ -19,16 +19,25 @@ This repository contains the Helm chart for deploying the [AudioMuse-AI app](htt
 
 ## Table of Contents
 
+- [What this chart manages](#what-this-chart-manages)
 - [Installation](#installation)
 - [Minimum Required Configuration](#minimum-required-my-custom-valuesyaml)
 - [External PostgreSQL (e.g. CloudNativePG)](#external-postgresql-eg-cloudnativepg)
 - [External Redis](#external-redis)
 - [Bring Your Own Secrets (`existingSecret`)](#bring-your-own-secrets-existingsecret)
 - [Ingress](#ingress)
-- [Security Context](#security-context)
-- [Service Account](#service-account)
 - [Additional Configuration](#additional-configuration)
 - [How to Uninstall](#how-to-uninstall)
+
+---
+
+## What this chart manages
+
+The chart now only manages **infrastructure**: PostgreSQL, Redis, the Flask and Worker deployments, ingress, security context, service account, and timezone.
+
+All application-level settings — media server credentials (Jellyfin / Navidrome / Lyrion), AudioMuse authentication, AI provider keys (OpenAI / Gemini / Mistral / Ollama), and clustering tuning — are configured **inside the app** through the setup wizard, and are persisted in the PostgreSQL database. They are no longer set in `values.yaml`.
+
+After installing the chart, open the AudioMuse-AI UI and complete the setup wizard to configure your media server, authentication, and AI provider.
 
 ---
 
@@ -47,108 +56,22 @@ helm install my-audiomuse audiomuse-ai/audiomuse-ai \
 
 ## Minimum Required `my-custom-values.yaml`
 
-Only set values for the media server and AI provider you actually use. Secrets for inactive integrations are **not** created by the chart.
-
-### Jellyfin
+For a default install (built-in PostgreSQL and Redis), the only thing you usually need to override is the PostgreSQL password:
 
 ```yaml
 postgres:
   user: "audiomuse"
-  password: "audiomusepassword"           # IMPORTANT: Change for production
-  aiChatDbUser: "ai_user"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change for production
-
-jellyfin:
-  userId: "YOUR-USER-ID"
-  token: "YOUR-API-TOKEN"
-  url: "http://jellyfin.example.com:8087"
-
-config:
-  mediaServerType: "jellyfin"
-  aiModelProvider: "NONE" # Options: "OPENAI", "GEMINI", "OLLAMA", "MISTRAL", or "NONE"
-  aiChatDbUserName: "ai_user"
-
-auth:
-  enabled: true
-  user: "YOUR_AUDIOMUSE_USER"
-  password: "YOUR_AUDIOMUSE_PASSWORD"
-  apiToken: "YOUR_API_TOKEN"
+  password: "audiomusepassword"   # IMPORTANT: Change for production
+  db: "audiomusedb"
 ```
 
-### Navidrome
+Optionally set the timezone:
 
 ```yaml
-postgres:
-  user: "audiomuse"
-  password: "audiomusepassword"           # IMPORTANT: Change for production
-  aiChatDbUser: "ai_user"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change for production
-
-navidrome:
-  user: "YOUR-USER"
-  password: "YOUR-PASSWORD"
-  url: "http://your_navidrome_url:4533"
-
-config:
-  mediaServerType: "navidrome"
-  aiModelProvider: "NONE"
-  aiChatDbUserName: "ai_user"
-
-auth:
-  enabled: true
-  user: "YOUR_AUDIOMUSE_USER"
-  password: "YOUR_AUDIOMUSE_PASSWORD"
-  apiToken: "YOUR_API_TOKEN"
+timezone: "Europe/Rome"
 ```
 
-### Lyrion
-
-```yaml
-postgres:
-  user: "audiomuse"
-  password: "audiomusepassword"           # IMPORTANT: Change for production
-  aiChatDbUser: "ai_user"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!" # IMPORTANT: Change for production
-
-lyrion:
-  user: "YOUR-USER"
-  password: "YOUR-PASSWORD"
-  url: "http://YOUR-LYRION-URL"
-
-config:
-  mediaServerType: "lyrion"
-  aiModelProvider: "NONE"
-  aiChatDbUserName: "ai_user"
-
-auth:
-  enabled: true
-  user: "YOUR_AUDIOMUSE_USER"
-  password: "YOUR_AUDIOMUSE_PASSWORD"
-  apiToken: "YOUR_API_TOKEN"
-```
-
-### Enabling an AI provider
-
-Set only the key for the provider you want. The chart will only create that provider's secret.
-
-```yaml
-config:
-  aiModelProvider: "GEMINI"   # or "OPENAI", "MISTRAL", "OLLAMA"
-
-gemini:
-  apiKey: "YOUR_GEMINI_API_KEY_HERE"
-
-# openai:
-#   apiKey: "YOUR_OPENAI_API_KEY_HERE"
-
-# mistral:
-#   apiKey: "YOUR_MISTRAL_API_KEY_HERE"
-
-# config:
-#   mistralModelName: "ministral-3b-latest"
-#   ollamaServerUrl: "http://192.168.3.15:11434/api/generate"
-#   ollamaModelName: "mistral:7b"
-```
+Everything else (media server type, media server credentials, authentication user/password/API token, AI provider and API keys) is configured **after** install through the AudioMuse-AI setup wizard.
 
 ---
 
@@ -166,7 +89,6 @@ postgres:
   user: "audiomuse"
   password: "YOUR-PASSWORD"
   db: "audiomusedb"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!"
 ```
 
 > **Note:** If you omit `postgres.external.host` while `postgres.enabled: false`, `helm template`/`helm install` will fail with a clear error message.
@@ -186,7 +108,6 @@ postgres:
     user: "username"
     password: "password"
     db: "dbname"
-  aiChatDbUserPassword: "ChangeThisSecurePassword123!"
 ```
 
 ---
@@ -208,7 +129,7 @@ redis:
 
 ## Bring Your Own Secrets (`existingSecret`)
 
-Every integration supports `existingSecret` so you can manage credentials with an external secrets manager (Sealed Secrets, External Secrets Operator, Vault, etc.). When set, the chart will **not** create its own Secret for that integration.
+PostgreSQL credentials can be sourced from an existing Kubernetes Secret managed by tools like Sealed Secrets, External Secrets Operator, or Vault. When `postgres.existingSecret` is set, the chart will **not** create its own PostgreSQL Secret.
 
 ```yaml
 postgres:
@@ -217,36 +138,16 @@ postgres:
     user: "POSTGRES_USER"      # key name inside the secret
     password: "POSTGRES_PASSWORD"
     db: "POSTGRES_DB"
-  aiChatDbExistingSecret: "my-ai-chat-db-secret"  # must contain key: AI_CHAT_DB_USER_PASSWORD
-
-jellyfin:
-  existingSecret: "my-jellyfin-secret"   # must contain keys: user_id, api_token
-
-navidrome:
-  existingSecret: "my-navidrome-secret"  # must contain keys: NAVIDROME_USER, NAVIDROME_PASSWORD
-
-lyrion:
-  existingSecret: "my-lyrion-secret"     # must contain keys: LYRION_USER, LYRION_PASSWORD
-
-auth:
-  existingSecret: "my-auth-secret"       # must contain keys: AUDIOMUSE_USER, AUDIOMUSE_PASSWORD, API_TOKEN
-
-openai:
-  existingSecret: "my-openai-secret"     # must contain key: OPENAI_API_KEY
-
-gemini:
-  existingSecret: "my-gemini-secret"     # must contain key: GEMINI_API_KEY
-
-mistral:
-  existingSecret: "my-mistral-secret"    # must contain key: MISTRAL_API_KEY
 ```
+
+> Media server credentials, AudioMuse auth, and AI provider keys are stored in the app database via the setup wizard, so they no longer need Kubernetes Secrets created by this chart.
 
 ---
 
 ## Ingress
 
-The chart ships an Ingress template that is **disabled by default**. The Flask service defaults to `LoadBalancer` so by default you can reach normally the service to `publicip:8000`. 
-This heml chart also provide an optional Ingress controller that you can anbled adding the below example in your `values.yaml`, this example assume the use of letsencrypy certificate.
+The chart ships an Ingress template that is **disabled by default**. The Flask service defaults to `LoadBalancer` so by default you can reach the service at `publicip:8000`.
+This helm chart also provides an optional Ingress controller that you can enable by adding the example below to your `values.yaml` (this example assumes the use of a Let's Encrypt certificate).
 
 ```yaml
 ingress:
@@ -271,7 +172,7 @@ ingress:
 
 For the full list of supported configuration values, refer to the [values.yaml file](https://github.com/NeptuneHub/AudioMuse-AI-helm/blob/main/values.yaml).
 
-For detailed documentation on each environment variable, visit the [AudioMuse-AI main repository](https://github.com/NeptuneHub/AudioMuse-AI).
+For detailed documentation on each application setting (media server, auth, AI providers, clustering), visit the [AudioMuse-AI main repository](https://github.com/NeptuneHub/AudioMuse-AI) — those settings are configured through the in-app setup wizard, not through the chart.
 
 To check the chart version that matches the AudioMuse-AI version you want to install:
 

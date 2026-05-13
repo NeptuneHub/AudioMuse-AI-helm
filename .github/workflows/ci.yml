@@ -107,3 +107,11 @@ jobs:
             echo "Found stray references to removed sections"
             exit 1
           fi
+
+      - name: Test 11 — All tracked files use LF line endings (no CRLF)
+        run: |
+          if git ls-files -z | xargs -0 grep -lI $'\r' 2>/dev/null; then
+            echo "❌ Files above have CRLF (Windows-style) line endings. Please convert to LF."
+            exit 1
+          fi
+          echo "✅ All tracked files use LF line endings"
