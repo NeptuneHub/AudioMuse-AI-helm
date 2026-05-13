@@ -33,11 +33,7 @@ This repository contains the Helm chart for deploying the [AudioMuse-AI app](htt
 
 ## What this chart manages
 
-The chart now only manages **infrastructure**: PostgreSQL, Redis, the Flask and Worker deployments, ingress, security context, service account, and timezone.
-
-All application-level settings — media server credentials (Jellyfin / Navidrome / Lyrion), AudioMuse authentication, AI provider keys (OpenAI / Gemini / Mistral / Ollama), and clustering tuning — are configured **inside the app** through the setup wizard, and are persisted in the PostgreSQL database. They are no longer set in `values.yaml`.
-
-After installing the chart, open the AudioMuse-AI UI and complete the setup wizard to configure your media server, authentication, and AI provider.
+This chart deploys the AudioMuse-AI infrastructure: **PostgreSQL, Redis, Flask, and Worker**. Once installed, open the app UI and complete the **setup wizard** to configure your media server, authentication, and AI provider — those settings live in the app's database, not in `values.yaml`.
 
 ---
 
@@ -56,22 +52,14 @@ helm install my-audiomuse audiomuse-ai/audiomuse-ai \
 
 ## Minimum Required `my-custom-values.yaml`
 
-For a default install (built-in PostgreSQL and Redis), the only thing you usually need to override is the PostgreSQL password:
+For a default install (built-in PostgreSQL and Redis), the only required override is the PostgreSQL password:
 
 ```yaml
 postgres:
-  user: "audiomuse"
-  password: "audiomusepassword"   # IMPORTANT: Change for production
-  db: "audiomusedb"
+  password: "your-strong-password"   # change for production
+
+timezone: "Europe/Rome"               # optional, defaults to UTC
 ```
-
-Optionally set the timezone:
-
-```yaml
-timezone: "Europe/Rome"
-```
-
-Everything else (media server type, media server credentials, authentication user/password/API token, AI provider and API keys) is configured **after** install through the AudioMuse-AI setup wizard.
 
 ---
 
@@ -140,14 +128,11 @@ postgres:
     db: "POSTGRES_DB"
 ```
 
-> Media server credentials, AudioMuse auth, and AI provider keys are stored in the app database via the setup wizard, so they no longer need Kubernetes Secrets created by this chart.
-
 ---
 
 ## Ingress
 
-The chart ships an Ingress template that is **disabled by default**. The Flask service defaults to `LoadBalancer` so by default you can reach the service at `publicip:8000`.
-This helm chart also provides an optional Ingress controller that you can enable by adding the example below to your `values.yaml` (this example assumes the use of a Let's Encrypt certificate).
+By default Ingress is **disabled** and the Flask service is exposed as `LoadBalancer`, so you can reach the app at `publicip:8000`. To use Ingress instead (example uses Let's Encrypt):
 
 ```yaml
 ingress:
@@ -184,7 +169,7 @@ Example output:
 
 ```
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-audiomuse-ai/audiomuse-ai       1.1.0           0.9.2           A Helm chart for deploying the AudioMuse-AI app...
+audiomuse-ai/audiomuse-ai       1.1.5           1.1.3           A Helm chart for deploying the AudioMuse-AI app...
 ```
 
 ---
