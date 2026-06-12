@@ -98,3 +98,9 @@ To also remove the namespace and its persistent volume claims:
 ```bash
 kubectl delete namespace audiomuse
 ```
+
+## Code Mirror
+AudioMuse-AI Helm Chart repository code is mirrored here:
+- https://codeberg.org/NeptuneHub/AudioMuse-AI-helm
+
+DO **NOT** USE MIRROR TO RAISE ISSUE, PR OTHER ACTION DIFFERENT FROM GET THE CODE
