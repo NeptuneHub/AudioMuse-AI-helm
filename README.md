@@ -1,6 +1,7 @@
 ![GitHub license](https://img.shields.io/github/license/neptunehub/AudioMuse-AI-helm.svg)
 ![Latest Tag](https://img.shields.io/github/v/tag/neptunehub/AudioMuse-AI-helm?label=latest-tag)
 ![Media Server Support: Jellyfin 10.11.0, Navidrome 0.58.0, Lyrion](https://img.shields.io/badge/Media%20Server-Jellyfin%2010.11.0%2C%20Navidrome%200.58.0%2C%20Lyrion-blue?style=flat-square&logo=server&logoColor=white)
+<a href="https://liberapay.com/NeptuneHub/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
 # AudioMuse-AI Helm Chart
 
